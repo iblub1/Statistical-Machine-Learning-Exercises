@@ -68,7 +68,7 @@ The commutative property for matrix multiplacation states: $A \cdot B = B \cdot 
 B \cdot A = \begin{bmatrix}
 2 & -1 \\
 8 & -1\\
-\end{bmatrix}
+\end{bmatrix} = A\cdot B
 \end{equation}
 
 Thus $A \cdot B \neq B \cdot A$
@@ -111,8 +111,6 @@ The distributiv property for matrices states: $A\cdot B + A\cdot C = A (B+C)$
 \]
 
 
-TEST CHANGES
-
 \end{answer}
 
 \end{question}
@@ -138,7 +136,66 @@ If we change the matrix in
 \end{equation*}
 is it still invertible? Why?
 
-\begin{answer}\end{answer}
+\begin{answer}
+	
+	First the determinant of the matrix is calculated using the Rule of Sarrus
+\begin{equation}
+	det(a) = 10 + 8 +12 -16 - 10 - 6 = -2 \neq 0
+\end{equation}
+
+After that we can calculate the Hauptminors of the matrix
+\begin{equation}
+det(A_{1,1}) = -6
+\end{equation}
+\begin{equation}
+det(A_{1,2}) = -1
+\end{equation}
+\begin{equation}
+det(A_{1,3}) = 2
+\end{equation}
+\begin{equation}
+det(A_{2,1}) = -2
+\end{equation}
+\begin{equation}
+det(A_{2,2}) = 2
+\end{equation}
+\begin{equation}
+det(A_{2,3}) = 2
+\end{equation}
+\begin{equation}
+det(A_{3,1}) = 2
+\end{equation}
+\begin{equation}
+det(A_{3,2}) = 1
+\end{equation}
+\begin{equation}
+det(A_{3,3}) = 0
+\end{equation}
+
+Using the Rule of Cramer
+
+\begin{equation}
+	x_i = \frac{det(A_i)}{det(A)} \forall i
+\end{equation}
+
+We calculate: 
+
+\begin{equation}
+A^{-1} = 
+\begin{bmatrix}
+	3 & -1 & -1  \\
+	1/2 & -1 & 1/2 \\
+	-1 & 1 & 0
+\end{bmatrix}
+\end{equation}
+
+If we now change the matrix, than it's not invertible anymore, because
+\begin{equation}
+	det(A) = 10 + 8 + 6 - 8- 10 - 6 = 24 - 24 = 0 
+\end{equation}
+
+
+\end{answer}
 
 \end{question}
 	
@@ -149,7 +206,31 @@ is it still invertible? Why?
 	
 	Given $A \in \R^{2 \times 3}$, which one does exist? Write down the equation for computing it, specifying the dimensionality of the matrices in the intermediate steps.
 	
-\begin{answer}\end{answer}
+\begin{answer}
+
+Definition of the left Pseudoinverse:
+
+\begin{equation}
+	J^{\text{*}}J = (J^T J)^-1 J^T \cdot J = I_m
+\end{equation}
+
+Definition of the right Pseudoinverse:
+
+\begin{equation}
+J J^{\text{*}} = J \cdot  J^T (J J^T)^-1 \cdot  = I_m
+\end{equation}
+
+Given: $A \in \Re^{2x3}$ with $m > n$ which implies full row rank we use the right Pseudoinverse
+
+\begin{equation}
+	A^{\text{*}} = \underbrace{ \underbrace{A^T}_\text{3x2} \cdot \underbrace{(J J^T)^{-1}}_\text{2x2} }_\text{3x2}
+\end{equation}
+
+\begin{equation}
+	\implies A^{\text{*}} \in \Re^{3x2}
+\end{equation}
+
+\end{answer}
 \end{question}
 
 %----------------------------------------------
@@ -157,7 +238,29 @@ is it still invertible? Why?
 \begin{question}{Eigenvectors \& Eigenvalues}{6}
 What are eigenvectors and eigenvalues of a matrix $A$? Briefly explain why they are important in Machine Learning.
 
-\begin{answer}\end{answer}
+\begin{answer}
+In general for Eigenvektors the following equation is true:
+\begin{equation}
+	A\cdot v = \lambda \cdot v
+\end{equation}
+
+Now we need to calculate the charistic polynom
+
+\begin{equation}
+	det(A-E\cdot \lambda = 0)
+\end{equation}
+
+\begin{equation}
+	det
+	\begin{bmatrix}
+	1-\lambda & 2 & 3 \\
+	1 & 2-\lambda 4 \\
+	1 & 4 & 5-\lambda
+	\end{bmatrix}
+	= -\lambda^3 + 8 \lambda^2 + 4\lambda - 2
+\end{equation}
+
+\end{answer}
 
 \end{question}
 
