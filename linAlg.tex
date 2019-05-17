@@ -1,0 +1,164 @@
+\newif\ifvimbug
+\vimbugfalse
+
+\ifvimbug
+\begin{document}
+\fi
+
+\exercise{Linear Algebra Refresher}
+ 
+
+\begin{questions}
+
+%----------------------------------------------
+
+\begin{question}{Matrix Properties}{5}
+A colleague of yours suggests matrix addition and multiplication are similar to scalars, thus commutative, distributive and associative properties can be applied.
+Prove if matrix addition and multiplication are commutative and associative analytically or give counterexamples. 
+Is matrix multiplication distributive with respect to matrix addition? 
+Again, prove it analytically or give a counterexample.
+Considering three matrices $ A, B, C$ of size $n\times n$.
+
+\begin{answer}
+To answer the questions examples calculated by following matrices will be used:
+
+
+\[
+A=
+\begin{bmatrix}
+2 & -1  \\
+0 &  1 
+\end{bmatrix}\quad
+B=
+\begin{bmatrix}
+1 & 0  \\
+4 & 3 
+\end{bmatrix}\quad
+C=
+\begin{bmatrix}
+2 & 2  \\
+2 & 2 
+.
+\end{bmatrix}
+\]
+
+	
+The commutative property for matrix addition states: $A+B = B + A$.
+\begin{equation}
+	A + B = ( \begin{array}{c c} 
+		3 & -1 \\
+		4 & 4 \end{array} )
+\end{equation}
+\begin{equation}
+B + A = ( \begin{array}{c c} 
+3 & -1 \\
+4 & 4 \end{array} ) = A + B
+\end{equation}
+
+The commutative property for matrix multiplacation states: $A \cdot B = B \cdot A$
+
+\begin{equation}
+	A \cdot B = \begin{bmatrix}
+	-2 & -3 \\
+	4 & 3\\
+	\end{bmatrix}
+\end{equation}
+
+\begin{equation}
+B \cdot A = \begin{bmatrix}
+2 & -1 \\
+8 & -1\\
+\end{bmatrix}
+\end{equation}
+
+Thus $A \cdot B \neq B \cdot A$
+
+The distributiv property for matrices states: $A\cdot B + A\cdot C = A (B+C)$ 
+
+
+\[
+\begin{bmatrix}
+-2 & -3  \\
+04 &  3 
+\end{bmatrix}\quad
++
+\begin{bmatrix}
+2 & 2  \\
+2 & 2 
+\end{bmatrix}\quad
+=
+\begin{bmatrix}
+2 & -1  \\
+0 & 1 
+\end{bmatrix}
+\cdot
+\begin{bmatrix}
+3 & 2  \\
+6 & 5
+\end{bmatrix}
+\]
+
+\[
+\begin{bmatrix}
+0 & -1  \\
+6 & 5 
+\end{bmatrix}\quad
+=
+\begin{bmatrix}
+0 & -1  \\
+6 & 5
+\end{bmatrix}
+\]
+
+
+\end{answer}
+
+\end{question}
+
+%----------------------------------------------
+
+\begin{question}{Matrix Inversion}{6}
+Given the following matrix 
+\begin{equation*}
+     A = ( \begin{array}{c c c} 
+     1 & 2 & 3 \\
+     1 & 2 & 4 \\
+     1 & 4 & 5 \end{array} )
+\end{equation*}
+analytically compute its inverse $ A^{-1}$ and illustrate the steps.
+
+If we change the matrix in
+\begin{equation*}
+     A = ( \begin{array}{c c c} 
+     1 & 2 & 3 \\
+     1 & 2 & 4 \\
+     1 & 2 & 5 \end{array} )
+\end{equation*}
+is it still invertible? Why?
+
+\begin{answer}\end{answer}
+
+\end{question}
+	
+%----------------------------------------------
+
+\begin{question}{Matrix Pseudoinverse}{3}
+	Write the definition of the right and left Moore-Penrose pseudoinverse of a generic matrix $A \in \R^{n\times m}$.
+	
+	Given $A \in \R^{2 \times 3}$, which one does exist? Write down the equation for computing it, specifying the dimensionality of the matrices in the intermediate steps.
+	
+\begin{answer}\end{answer}
+\end{question}
+
+%----------------------------------------------
+
+\begin{question}{Eigenvectors \& Eigenvalues}{6}
+What are eigenvectors and eigenvalues of a matrix $A$? Briefly explain why they are important in Machine Learning.
+
+\begin{answer}\end{answer}
+
+\end{question}
+
+%----------------------------------------------
+
+\end{questions}

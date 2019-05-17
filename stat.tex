@@ -1,0 +1,86 @@
+\newif\ifvimbug
+\vimbugfalse
+
+\ifvimbug
+\begin{document}
+\fi
+
+\exercise{Statistics Refresher}
+ 
+
+\begin{questions}
+
+%----------------------------------------------
+
+\begin{question}{Expectation and Variance}{8}
+Let $\Omega$ be a finite set and $P:\Omega\rightarrow\R$ a probability measure that (by definition) satisfies $P(\omega)\geq0$ for all $\omega\in\Omega$ and $\sum_{\omega\in\Omega}P(\omega)=1$. 
+Let $f:\Omega\rightarrow\R$ be an arbitrary function on $\Omega$.
+
+\textbf{1)} Write the definition of expectation and variance of $f$ and discuss if they are linear operators.
+
+\textbf{2)} You are given a set of three dices $\{A,B,C\}$.
+The following table describes the outcome of six rollouts for these dices, where each column shows the outcome of the respective dice. 
+(Note: assume the dices are standard six-sided dices with values between 1-6)
+\begin{equation*}
+\begin{array}{r|cccccc}
+    A & 4 & 4 & 2 & 4 & 1 & 1 \\
+    \hline
+    B & 3 & 6 & 3 & 3 & 4 & 3 \\
+    \hline
+    C & 5 & 5 & 2 & 1 & 1 & 1 
+\end{array}
+\end{equation*}
+Estimate the expectation and the variance for each dice using unbiased estimators. (Show your computations).
+
+\textbf{3)} According to the data, which of them is the ``most rigged''? Why?
+
+\begin{answer}\end{answer}
+
+\end{question}
+
+%----------------------------------------------
+
+\begin{question}{It is a Cold World}{7}
+Consider the following three statements:
+\\
+a) A person with a cold has backpain $24\%$ of the time.
+\\
+b) $5\%$ of the world population has a cold.
+\\
+c) $12\%$ of those who do not have a cold, still have backpain.
+
+\textbf{1)} Identify random variables from the statements above and define a unique symbol for each of them.\\
+\textbf{2)} Define the domain of each random variable.\\
+\textbf{3)} Represent the three statements above with your random variables.\\
+\textbf{4)} If you suffer from backpain, what are the chances that you suffer from a cold? (Show all the intermediate steps.)
+
+\begin{answer}\end{answer}
+
+\end{question}
+
+
+%----------------------------------------------
+
+\begin{question}{Journey to THX1138}{10}
+	After the success of the \href{http://rosetta.esa.int/}{Rosetta mission}, ESA decided to send a spaceship to rendezvous with the comet THX1138. 
+	This spacecraft consists of four independent subsystems $A,B,C,D$. 
+	Each subsystem has a probability of failing during the journey equal to $1/3$. 
+	\\
+	1) What is the probability of the spacecraft $S$ to be in working condition (i.e., all subsystems are operational at the same time) at the rendezvous?
+	\\
+	2) Given that the spacecraft $S$ is not operating properly, compute	analytically the probability that \textbf{only} subsystem $A$ has failed. 
+	\\
+	3) Instead of computing the probability analytically, do a simple simulation experiment and compare the result to the previous solution. 
+	Include a snippet of your code. 
+	\\
+	4) An improved spacecraft version has been designed.
+	The new spacecraft fails if the critical subsystem $A$ fails, or any two subsystems of the remaining $B,C,D$ fail. 
+	What is the probability that \textbf{only} subsystem $A$ has failed, given that the spacecraft $S$ is failing? 
+	
+	
+\begin{answer}\end{answer}
+	
+\end{question}
+
+
+\end{questions}
