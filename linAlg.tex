@@ -260,6 +260,30 @@ Now we need to calculate the charistic polynom
 	= -\lambda^3 + 8 \lambda^2 + 4\lambda - 2
 \end{equation}
 
+\begin{equation}
+	Weiter oder hier aufhören oder das davor löschen?
+\end{equation}
+
+Eigenvectors and values are Vectors and Scalars for which 
+\begin{equation}
+	W\cdot \vec{v} = \lambda \vec{v}
+\end{equation}
+holds true.
+
+They're defined individually for each Transformation Matrix $W$. 
+If we now want to change the length of an Eigenvector we don't need to multiply it with $W$, instead we just multiply it with a corresponding Eigenvalue. Since this is a scalar instead of a Matrix, it saves computational power fo this calculation. Actually any transformation $W$ applied to an vector can be seen as a lineare combination of eigenvectors.
+
+\begin{equation}
+	\vec{u} = W \vec{v} = c_1 \lambda_1 \cdot \vec{v}_1 + ... + c_n \lambda_n \cdot \vec{v}_n
+\end{equation}
+
+This again is a huge time saver.
+
+Eigenvalues also tell us about the numerical stability of a Matrix transformation. To achieve a vanishing matrix Eigenvalues of $\leq 1$are needed. If the Eigenvalues are bigger than one, than the matrix will explode. Ideally the Eigenvalues are all equal to one. The Markov Matrix is one of these matrices and thus used in machine learning. 
+
+This knowledge is also used in the orthogonal weight initialization method for Neural Networks.
+
+
 \end{answer}
 
 \end{question}
