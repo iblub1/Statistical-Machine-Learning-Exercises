@@ -60,9 +60,26 @@ Rosenbrock's function (to be minimized) is defined as
 $$f(\boldsymbol{x}) = \sum_{i=1}^{n-1} \left[ 100 (x_{i+1} - x_{i}^{2})^{2} + (x_{i} - 1)^{2}\right].$$
 Write in Python a simple gradient descent algorithm and simulate it for 10,000 steps on Rosenbrock's function with $n=20$. Attach a snippet of your algorithm, discuss the effects of the learning rate and attach a plot of your learning curve with your best learning rate.
 
-\begin{answer}\end{answer}
-
+\begin{answer}
+	Choosing the right learning rate was tricky, because choosing it to high or to low would result in exploding gradients. 
+	From all tested cases, a learning rate between 0.001 and 0.0001 worked best. 
+\end{answer}
 \end{question}
+
+\begin{lstlisting}
+	for k in range(max_iteration):
+	    prev_x = cur_x  
+	    cur_x = prev_x - learning_rate * rosen_der(prev_x) 
+	    error = abs(cur_x - prev_x)
+	    k = k + 1 	
+	    history[k, :] = np.linalg.norm(error)
+\end{lstlisting}
+\begin{figure}[h!]
+	\includegraphics[width=12cm, scale=0.5]{00001.jpg}
+	\caption{Best Learning Rate was 0.0001}
+	\label{fig:LR_00001}
+\end{figure}
+
 
 %----------------------------------------------
 
@@ -74,7 +91,34 @@ Discuss the differences among them, pointing out pros and cons of each one.
 
 \textbf{2)} Many gradient descent optimization algorithms use the so-called \emph{momentum} to improve convergence. What is it? Is it always useful?
 
-\begin{answer}\end{answer}
+\begin{answer}
+
+
+
+\textbf{Batch gradient descent} in machine Learning calculates the gradient using the whole dataset. For this the computer needs to have the whole dataset in memory, which is not always doable. Because of that, its also very time consuming. It converts against the global Minimum of konvex functions and local Minimums of non konvex functions.
+
+\textbf{Stochastic gradient descent} calculates the gradient for a single traingingexample. Because of this stochastic gradient descent learns a lot faster than batch gradient descent, however its variance is very high, resulting in highly fluctuating costfunction.
+
+
+\textbf{Mini-batch gradient descent} can be seen as an combination between stocahstic gradient descent and batch gradient descent, using mini-batches containing $n$ training examples. This results in reduced variance and more stable conversion rate. When mini-batch gradient descent is calculated on gpus, it is possible to reduce the workload by using matrix operations.
+
+
+\textbf{Momentum} is often used to help the gradient descent algorithm to find the global Minimum. 
+
+Without Momentum there is a high possibility, that GD starts oscillating around a local minimum. In order to reach the global Minimum, this local one needs to be "jumped over". This can be interpeted as a physical impulsive giving a downhill rolling sphere an impuls of energy, to help it overcome obstacles. This "impuls" is usually calculated by looking at the last gradient and adding a part of it to the current gradient. This means, that if the last update to our parameters was big, we guess that the next one will be big, too.
+\end{answer}
+
+\begin{figure}[h!]
+	\includegraphics[width=12cm, scale=0.5]{SGD.png}
+	\caption{Example for fluctuating cost function for a Neural Network when using SGD [Source: Me]}
+	\label{fig:SGD_cost_function}
+\end{figure}
+\begin{figure}[h!]
+	\includegraphics[width=\linewidth, scale=0.5]{momentum.png}
+	\caption{Physically interpretation of Momentum [Source: Me]}
+	\label{fig:Momentum}
+\end{figure}
+
 
 \end{question}
 %----------------------------------------------
