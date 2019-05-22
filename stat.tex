@@ -17,7 +17,24 @@ Let $\Omega$ be a finite set and $P:\Omega\rightarrow\R$ a probability measure t
 Let $f:\Omega\rightarrow\R$ be an arbitrary function on $\Omega$.
 
 \textbf{1)} Write the definition of expectation and variance of $f$ and discuss if they are linear operators.
-
+\begin{answer}
+The expectation is defined as follows:
+\begin{equation}
+\mathbb{E}_{x \sim p(\mathbf{x})}[f(x)]=\mathbb{E}_{x}[f]=\mathbb{E}[f]=\left\{\begin{array}{ll}{\sum_{x} p(x) f(x)} & {\text { discrete case }} \\ {\int p(x) f(x) \mathrm{d} x} & {\text { continuous case }}\end{array}\right.
+\end{equation}
+The expectation is a linear operator, because for a scalar $a$ and the random variables $\mathbf{x}$ and $\mathbf{y}$ the following statements hold:
+\begin{equation}
+\begin{array}{l}{\mathbb{E}[a \mathbf{x}]=a \mathbb{E}[\mathbf{x}]} \\ {\mathbb{E}[\mathbf{x}+\mathbf{y}]=\mathbb{E}[\mathbf{x}]+\mathbb{E}[\mathbf{y}]}\end{array}
+\end{equation}
+The variance of f is defined as follows:
+\begin{equation}
+\operatorname{var}[x]=\mathbb{E}\left[(x-\mathbb{E}[x])^{2}\right]=\mathbb{E}\left[x^{2}\right]-\mathbb{E}[x]^{2}
+\end{equation}
+The variance is not a linear operator, as can be shown by using the definition of the variance:
+\begin{equation}
+\operatorname{var}[ax]=\mathbb{E}\left[(ax-\mathbb{E}[ax])^{2}\right]=\mathbb{E}\left[(ax)^{2}\right]-\mathbb{E}[ax]^{2}=a^{2}\mathbb{E}\left[x^{2}\right]-a^{2}\mathbb{E}[x]^{2}=a^{2}\left[\operatorname{var}[x]\right]
+\end{equation}
+\end{answer}
 \textbf{2)} You are given a set of three dices $\{A,B,C\}$.
 The following table describes the outcome of six rollouts for these dices, where each column shows the outcome of the respective dice. 
 (Note: assume the dices are standard six-sided dices with values between 1-6)
@@ -31,11 +48,51 @@ The following table describes the outcome of six rollouts for these dices, where
 \end{array}
 \end{equation*}
 Estimate the expectation and the variance for each dice using unbiased estimators. (Show your computations).
-
+\begin{answer}
+For using the formula for the expectation in the discrete case, one needs to calculate the probabilities of the six outcomes, that each of the three dices can take. This is done by dividing the frequencies of the outcomes by the overall number of rolls, which equals six for all three dices.\\ 
+\begin{center}
+\begin{tabular}{ c||c|c|c|c|c|c| } 
+ & $p_{1}$ & $p_{2}$ & $p_{3}$ & $p_{4}$ & $p_{5}$ & $p_{6}$\\ 
+ \hline
+ \hline
+ A & $\frac{2}{6}$ & $\frac{1}{6}$ & 0 & $\frac{3}{6}$ & 0 & 0 \\ 
+ \hline
+ B & 0 & 0 & $\frac{4}{6}$ & $\frac{1}{6}$ & 0 & $\frac{1}{6}$\\ 
+ \hline
+ C &  $\frac{3}{6}$ & $\frac{1}{6}$ & 0 & 0 & $\frac{2}{6}$  & 0 \\ 
+ \hline \\
+\end{tabular}
+\end{center}
+The expectations is calculated with the formula above (discrete case). The following formula for the sample variance is used, which leads to an unbiased estimator:\\
+\begin{equation}
+\operatorname{var}[x]=\frac{1}{n-1} \sum_{i=1}^{n}(x_{i}-\mathbb{E}\left[x\right])^{2}
+\end{equation}
+Dice A:\\ \\
+$\mathbb{E}[ \mathbf{x}] = \frac{2}{6}\cdot1 + \frac{1}{6}\cdot2 + \frac{3}{6}\cdot4 \approx 2.67$\\
+$\operatorname{var}[x]=\frac{1}{5}[3\cdot(4-\frac{8}{3})^{2}+(2-\frac{8}{3})^{2}+2\cdot(1-\frac{8}{3})^{2}] \approx  2.26$\\ \\
+Dice B:\\ \\
+$\mathbb{E}[ \mathbf{x}] = \frac{4}{6}\cdot3 + \frac{1}{6}\cdot4 + \frac{1}{6}\cdot6 \approx 3.67$\\
+$\operatorname{var}[x]=\frac{1}{5}[4\cdot(3-\frac{11}{3})^{2}+(6-\frac{11}{3})^{2}+(4-\frac{11}{3})^{2}] \approx  1.46$\\ \\
+Dice C:\\ \\
+$\mathbb{E}[ \mathbf{x}] = \frac{3}{6}\cdot1 + \frac{1}{6}\cdot2 + \frac{2}{6}\cdot5 =2.5$\\
+$\operatorname{var}[x]=\frac{1}{5}[3\cdot(1-\frac{15}{6})^{2}+(2-\frac{15}{6})^{2}+2\cdot(5-\frac{15}{6})^{2}] \approx  3.9$\\
+\end{answer}
 \textbf{3)} According to the data, which of them is the ``most rigged''? Why?
 
-\begin{answer}\end{answer}
-
+\begin{answer}
+One can use the entropy to calculate the information content of a probability distribution. The information content of a probability distribution is low, if most of the probability mass is centered around a few values. We consider the extreme case, that we sample a value from a distribution, where the probability mass is centered at exactly one value. If we sample from such a distribution, the outcome is already known before sampling, the information content and thus the entropy are low (zero in this example).\\ On the other hand, if we consider a uniform distribution, the outcome of a sampling procedure is very uncertain. The probability distribution has a high content of information and thus has a high entropy. In the case of a perfect dice, we would expect the entropy to be very high, since all six outcome occur exactly with the same probability (uniformly distributed) and the outcome of one sample is highly uncertain. \\
+Based upon these thoughts we can evaluate, which dice is ``most rigged'' by simply calculating the entropies of the empirical distribution of the three dices. The dice with the highest entropy is closest to a perfect dice. The dice with the lowest entropy can be considered as ``most rigged''. \\ \\
+One criticism of this procedure is, that we only have six outcomes for each of the dices, which is a very small sample size. Nevertheless, we will approach the problem as discussed.\\
+The formular for the entropy is:
+\begin{equation}
+H(p)=\mathbb{E}[h]=\sum_{i} p_{i} h(p_{i})=-\sum_{i} p_{i} \log _{2} p_{i}
+\end{equation}
+The results for the entropy of the three dices A, B and C are:\\
+$H_{A}(p)=-\frac{2}{6}\log_2(\frac{2}{6})-\frac{1}{6}\log_2(\frac{1}{6})-\frac{3}{6}\log_2(\frac{3}{6}) \approx 1.4591$\\
+$H_{B}(p)=-\frac{4}{6}\log_2(\frac{4}{6})-\frac{1}{6}\log_2(\frac{1}{6})-\frac{1}{6}\log_2(\frac{1}{6}) \approx 1.252$\\
+$H_{C}(p)=-\frac{3}{6}\log_2(\frac{3}{6})-\frac{1}{6}\log_2(\frac{1}{6})-\frac{2}{6}\log_2(\frac{2}{6}) \approx 1.4591$\\ \\
+The entropy of dice B is the lowest. For that reason we can conclude, that based on the sample dice B is deviating the most from the uniform distribution of a perfect dice and thus can be seen as ``most rigged''.
+\end{answer}
 \end{question}
 
 %----------------------------------------------
@@ -50,12 +107,35 @@ b) $5\%$ of the world population has a cold.
 c) $12\%$ of those who do not have a cold, still have backpain.
 
 \textbf{1)} Identify random variables from the statements above and define a unique symbol for each of them.\\
+\begin{answer}
+ A Random Variable is a set of possible values from a random experiment. There are two random variables in this exercise, which are binary variables, that only can take two different values. \\
+The first random variable is C = ``having a cold''.\\
+The second random variable is B = ``having backpain''.
+\end{answer}
 \textbf{2)} Define the domain of each random variable.\\
+\begin{answer}
+As both random variables are binary variables, their domain is limited to two values, which we define as $0$ and $1$. The outcome $1$ stands for ``having a cold'' and ``having backpain'', respectively. The outcome $0$ stands for ``not having a cold'' and ``not having backpain''. More formally the domains are defined as follows:\\ \\
+$dom(C) = \{0,1\}$\\
+$dom(B) = \{0,1\}$
+\end{answer}
 \textbf{3)} Represent the three statements above with your random variables.\\
+\begin{answer}
+Statement a) \qquad $P(B=1\mid C=1) = 0.24$\\
+Statement b) \qquad $P(C=1) = 0.05$\\
+Statement c) \qquad $P(B=1\mid C=0) = 0.12$
+\end{answer}
 \textbf{4)} If you suffer from backpain, what are the chances that you suffer from a cold? (Show all the intermediate steps.)
-
-\begin{answer}\end{answer}
-
+\begin{answer}
+To answer this question we use Bayes' formula.\\ \\
+\begin{equation*}
+\begin{split}
+P(C=1\mid B=1) = 
+& \frac{P(B=1\mid C=1) P(C=1)}{P(B=1)} = \frac{P(B=1\mid C=1) P(C=1)}{P(B=1\mid C=1) P(C=1)+P(B=1\mid C=0) P(C=0)} =\\
+& = \frac{P(B=1\mid C=1) P(C=1)}{P(B=1\mid C=1) P(C=1)+P(B=1\mid C=0) (1-P(C=1))} =\\ 
+&= \frac{0.24\cdot0.05}{0.24\cdot0.05+0.12\cdot(1-0.05)} = \frac{2}{21} \approx 0.0952
+\end{split}
+\end{equation*}
+\end{answer}
 \end{question}
 
 
@@ -68,18 +148,83 @@ c) $12\%$ of those who do not have a cold, still have backpain.
 	\\
 	1) What is the probability of the spacecraft $S$ to be in working condition (i.e., all subsystems are operational at the same time) at the rendezvous?
 	\\
+\begin{answer}
+There are five random variables in this exercise, which are binary variables, that only can take two different values. \\
+The first random variable is A = ``subsystem A operational''.\\
+The second random variable is B = ``subsystem B operational''.\\
+The third random variable is C = ``subsystem C operational''.\\
+The forth random variable is D = ``subsystem D operational''.\\
+The fifth random variable is S = ``spacecraft S operational''.\\
+$dom(A) = dom(B) = dom(C) = dom(D) = dom(S) = \{0,1\}$, whereas 0 stands for ``not operational'' and 1 stands for ``operational''.\\ \\
+From the exercise it is given, that $P(A=0)=P(B=0)=P(C=0)=P(D=0)= \frac{1}{3}$\\
+As probalities have to sum to 1, we can calculate the complementary probability easily: $P(A=1)=P(B=1)=P(C=1)=P(D=1)= 1- \frac{1}{3}=\frac{2}{3}$\\ \\
+By using the independece of the four subsystems A, B, C and D we can calculate $P(S=1)$ as follows:\\
+$P(S=1)= P(A=1,B=1,C=1,D=1)=P(A=1)P(B=1)P(C=1)P(D=1)=(\frac{2}{3})^{4}= \frac{16}{81} \approx 19.75\%$
+\end{answer}
 	2) Given that the spacecraft $S$ is not operating properly, compute	analytically the probability that \textbf{only} subsystem $A$ has failed. 
 	\\
+\begin{answer}
+By using definition of conditional dependency, the chain rule of probabilities, the independency assumption of the subsystems A,B,C and D and the known complementary probability of $P(S=0)$ we can calculate the probability of the event that only subsystem A has failed given that the spacecraft S is not operating properly. From the text we know that the spacecraft is not operating properly, if at least one subsystem is failing, so:\\
+$P(S=0\mid A=0,B=1,C=1,D=1) = P(S=0\mid A=1,B=0,C=1,D=1) = $\\
+$= P(S=0\mid A=1,B=1,C=0,D=1) = P(S=0\mid A=1,B=1,C=1,D=0) = 1$\\ \\
+Using all the information we can obtain:
+\begin{equation*}
+\begin{split}
+P(A=0,B=1,C=1,D=1\mid S=0)  
+& = \frac{P(A=0,B=1,C=1,D=1,S=0)}{P(S=0)} = \\
+& = \frac{P(S=0\mid A=0,B=1,C=1,D=1)P(A=0,B=1,C=1,D=1)}{1-P(S=1)} = \\
+& = \frac{1\cdot P(A=0)P(B=1)P(C=1)P(D=1)}{1-P(S=1)} =\\
+& = \frac{1\cdot \frac{1}{3}\cdot (\frac{2}{3})^{3}}{1-\frac{16}{81}} = \frac{8}{65} \approx 0.123
+\end{split}
+\end{equation*}
+\end{answer}
 	3) Instead of computing the probability analytically, do a simple simulation experiment and compare the result to the previous solution. 
 	Include a snippet of your code. 
 	\\
+\begin{answer}
+If we set the number of simulation iterations sufficiently high (e.g. 100000) our Monte Carlo simulation yields the same result as analytically calculating the probability, with an accuracy of three decimals. We can reproduce a probability of $P(A=0,B=1,C=1,D=1\mid S=0)  \approx 0.123$.\\ \\
+\lstinputlisting[language=Python]{monte_carlo.py}
+\end{answer}
 	4) An improved spacecraft version has been designed.
 	The new spacecraft fails if the critical subsystem $A$ fails, or any two subsystems of the remaining $B,C,D$ fail. 
 	What is the probability that \textbf{only} subsystem $A$ has failed, given that the spacecraft $S$ is failing? 
-	
-	
-\begin{answer}\end{answer}
-	
+\begin{answer}
+We use the definition of conditional dependency, the chain rule of probabilities, the independency assumption of the subsystems A,B,C and D to calculate the probability of the event that only subsystem A has failed given that the spacecraft S is not operating properly.\\
+The calculation steps are similar to task 2),  but we need to calculate a new value for P(S=1) for the improved spacecraft design.
+\begin{equation*}
+\begin{split}
+P(A=0,B=1,C=1,D=1\mid S=0)  
+& = \frac{P(A=0,B=1,C=1,D=1,S=0)}{P(S=0)} = \\
+& = \frac{P(S=0\mid A=0,B=1,C=1,D=1)P(A=0,B=1,C=1,D=1)}{1-P(S=1)} = \\
+& = \frac{1\cdot P(A=0)P(B=1)P(C=1)P(D=1)}{1-P(S=1)}
+\end{split}
+\end{equation*}
+From the task description we know that the improved spacecraft is operational, given that A does not fail and at most one of the subsystems B, C or D fail:\\
+$P(S=1\mid A=1,B=1,C=1,D=1)=P(S=1\mid A=1,B=0,C=1,D=1)=P(S=1\mid A=1,B=1,C=0,D=1)=P(S=1\mid A=1,B=1,C=1,D=0) =1$.\\ \\
+The new probability P(S=1) for the improved spacecraft design being operational can be calculated as follows:
+\begin{equation*}
+\begin{split}
+P(S=1) =
+& \quad P(S=1,A=1,B=1,C=1,D=1) +\\
+&+ P(S=1,A=1,B=0,C=1,D=1) +\\
+&+ P(S=1,A=1,B=1,C=0,D=1) +\\
+&+ P(S=1,A=1,B=1,C=1,D=0) = \\
+&  = P(S=1\mid A=1,B=1,C=1,D=1)P(A=1,B=1,C=1,D=1) + \\
+& + P(S=1\mid A=1,B=0,C=1,D=1)P(A=1,B=0,C=1,D=1) + \\
+& + P(S=1\mid A=1,B=1,C=0,D=1)P(A=1,B=1,C=0,D=1) + \\
+& + P(S=1\mid A=1,B=1,C=1,D=0)P(A=1,B=1,C=1,D=0) = \\
+&  = 1\cdot P(A=1)P(B=1)P(C=1)P(D=1) + \\
+& + 1\cdot P(A=1)P(B=0)P(C=1)P(D=1) + \\
+& + 1\cdot P(A=1)P(B=1)P(C=0)P(D=1)+ \\
+& + 1\cdot P(A=1)P(B=1)P(C=1)P(D=0) = \\
+& = 1\cdot(\frac{2}{3})^{4} + 3\cdot1\cdot\frac{1}{3}\cdot(\frac{2}{3})^{3} = \frac{40}{81}
+\end{split}
+\end{equation*}
+We obtain an overall solution of:
+\begin{equation*}
+P(A=0,B=1,C=1,D=1\mid S=0)  = \frac{1\cdot \frac{1}{3}\cdot (\frac{2}{3})^{3}}{1-\frac{40}{81}} = \frac{8}{41} \approx 0.1951
+\end{equation*}
+\end{answer}
 \end{question}
 
 
