@@ -101,24 +101,24 @@ The dual function is obtainned by plugging $p_{i}^{*}$ into the Lagrangian. We u
 We take the partial derivatives of the dual function, in order to calculate the two Langrangian multipliers and subsequently plugging them back into $p_{i}^{*}$.
 \begin{equation*}
 \begin{split}
-& \frac{\partial\mathcal{G}}{\partial \lambda_1} = \frac{2}{e}2^{\lambda_2}\sum_{i=1}^4i2^{2\lambda_1i}-4 = 0 \qquad \rightarrow \quad  a\sum_{i=1}^4 i b^i -2 = 0 \\
-& \frac{\partial\mathcal{G}}{\partial \lambda_2} = \frac{1}{e} 2^{\lambda_2}\sum_{i=1}^4 2^{2\lambda_1 i} - 1 = 0 \qquad \rightarrow \quad a\sum_{i=1}^4  b^i -1 = 0
+& \frac{\partial\mathcal{G}}{\partial \lambda_1} = \frac{2}{e}2^{\lambda_2}\sum_{i=1}^4i2^{2\lambda_1i}-4 = 0 \qquad \rightarrow \quad  f\sum_{i=1}^4 i g^i -2 = 0 \\
+& \frac{\partial\mathcal{G}}{\partial \lambda_2} = \frac{1}{e} 2^{\lambda_2}\sum_{i=1}^4 2^{2\lambda_1 i} - 1 = 0 \qquad \rightarrow \quad f\sum_{i=1}^4  g^i -1 = 0
 \end{split}
 \end{equation*}
-We here used the substitutions $a=\frac{1}{e}2^{\lambda_2}$ and $b=2^{2\lambda_1}$.\\
-by writing out the sums we obtain the following equation system for $a$ and $b$:
+We here used the substitutions $f=\frac{1}{e}2^{\lambda_2}$ and $g=2^{2\lambda_1}$.\\
+by writing out the sums we obtain the following equation system for $f$ and $g$:
 \begin{equation*}
 \begin{split}
-& a (b+2b^2+3b^3+4b^4)-2=0\\
-& a (b+b^2+b^3+b^4)-1=0
+& f (g+2g^2+3g^3+4g^4)-2=0\\
+& f (g+g^2+g^3+g^4)-1=0
 \end{split}
 \end{equation*} 
-Solving the equation system leads to a cubic polynomial for $b$:
+Solving the equation system leads to a cubic polynomial for $g$:
 \begin{equation*}
--1+b^2+2b^3 = 0
+-1+g^2+2g^3 = 0
 \end{equation*} 
 This polynomial can be solved analytically by using the following general formula for cubic equations of the form $ax^3+bx^2+c^x+d=0$. (see figure \ref{fig:cubic}) \\
-By solving for the two unknowns we obtain the values of $a\approx 0.6410$ and $b\approx0.6573$.\\
+By solving for the two unknowns we obtain the values of $f\approx 0.6410$ and $g\approx0.6573$.\\
  With $a$ and $b$ we can calculate the Langrangian multipliers to $\lambda_1=-0.3027$ and $\lambda_2=0.8011$.
 Plugging into $p_{i}^{*}=e^{-1} 2^{2 \lambda_{1} i+\lambda_{2}}$ we can finally obtain the result to:\\ \\
 $p_{1}^{*}=e^{-1} 2^{0.8011 - 2 \cdot 1 \cdot 0.3027} = 0.4213$\\
@@ -272,7 +272,7 @@ By taking the partial derivative with respect to $\lambda$ and setting the equat
 \end{align*}
 For $\Delta \theta$ we finally obtain:
 \begin{align*}
-\Delta \theta = - \sqrt{\frac{\epsilon}{\Delta J(\theta)^TF(\theta)^{-1}\Delta J(\theta)}}F(\theta)^{-1}\Delta J(\theta)
+\Delta \theta = - \sqrt{\frac{2\epsilon}{\Delta J(\theta)^TF(\theta)^{-1}\Delta J(\theta)}}F(\theta)^{-1}\Delta J(\theta)
 \end{align*}
 In this formula the term below the square root is the learning rate. The term $-F(\theta)^{-1}\Delta J(\theta)$ determines the direction of the descent. Depending on the matrix $F(\theta)^{-1}$ is not necessarily is the same direction as $-\Delta J(\theta)$, because this matrix can turn the vector to another direction.
 \end{answer}
@@ -301,9 +301,21 @@ from $p(x; \theta)$ to $p(x; \theta + \Delta \theta)$ in the form
 \end{equation*}
 Covariant gradient with the matrix $F(\theta)$ that you found
 is known as the natural gradient.
-
-\begin{answer}\end{answer}
-
+\begin{answer}
+The solution for the quadratic Taylor approximation of the KL divergence can be found as follows:
+\begin{align*}
+K L(P(X ; \theta) \| P(X ; \theta+\delta \theta)) \approx & 
+\frac{1}{2} \delta \theta^{\top}(\sum_{X} P(X ; \theta) \nabla_{\theta} \log P(X; \theta) \nabla_{\theta} \log P(X ; \theta)^{\top}) \delta \theta \\
+= & \frac{1}{2} \delta \theta^{\top} F(\theta) \delta \theta
+\end{align*}
+\end{answer}
+\begin{answer}
+For deriving the quadratic Taylor approximation of the KL divergence in all details we proceed analogous to the approach of Peter Abbeel in his lecture on Advanced Robotics (see https://people.eecs.berkeley.edu/~pabbeel/cs287-fa09/lecture-notes/lecture20-6pp.pdf).
+\end{answer}
+\begin{figure}[h]
+	\includegraphics[width=15.5cm, scale=1]{abbeel.png}
+	\label{fig:abbeel}
+\end{figure}
 \end{question}
 
 
