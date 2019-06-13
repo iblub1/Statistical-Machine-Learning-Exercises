@@ -103,12 +103,24 @@ Using the log to get rid of the exponential function.
 \begin{equation}
 	 -\frac{1}{2\sigma^2}(x-\mu_1)^2 = \ln(3)  -\frac{1}{2\sigma^2}(x-\mu_2)^2
 \end{equation}
+
+We now use $\mu_1 = 2 \mu_2$ and continue.
 \begin{equation}
-	(x-\mu_1)^2 = -2\sigma^2 \cdot \ln(3) + (x-\mu_2)^2
+	-\frac{1}{2\sigma^2}(x^2-4x\mu_2 + 4\mu_2^2) + \frac{1}{2\sigma^2}(x^2-2x\mu_2+\mu_2^2) = ln(3)
+\end{equation}
+\begin{equation}
+	-\frac{1}{2\sigma^2}(x^2 -4x\mu_2+4\mu_2^2) + \frac{1}{2\sigma^2}(-x^2+2x\mu_2-\mu_2^2) = ln(3)
+\end{equation}
+Transforming the terms inside the brackets brings us to
+\begin{equation}
+	-2x\mu_2 + 3\mu_2^2 = ln(3)\cdot(-2\sigma^2)
+\end{equation}
+\begin{equation}
+	-2x\mu_2 = -2ln(3)\sigma^2 - 3\mu_2^2
 \end{equation}
 After transposing this equation we get:
 \begin{equation}
-	x = \frac{3\mu_2^2 + 2\ln(3)\cdot\sigma^2}{2\mu_1}
+	x = \frac{3\mu_2^2 + 2\ln(3)\cdot\sigma^2}{2\mu_2}
 \end{equation}
 
 \end{answer}

@@ -84,7 +84,7 @@ Generate a single plot with the different density estimates and attach it to you
 \begin{answer}
 The log-likelihood for the first Gaussian kernel with $\sigma = 0.03$ is: $-674.7$. 
 
-The log-likelihood for the second Gaussian kernel with $\sigma = 0.02$ is: $-717.0$. 
+The log-likelihood for the second Gaussian kernel with $\sigma = 0.2$ is: $-717.0$. 
 
 The log-likelihood for the third Gaussian kernel with $\sigma = 0.08$ is: $-795.7$. 
 
@@ -93,7 +93,7 @@ From campring the log-likelihoods the first kernel should be the best one. But b
 \end{question}
 
 \begin{figure}[!h]
-	\includegraphics[width=0.7\linewidth]{pictures/kdplot.png}
+	\includegraphics[width=0.8\linewidth]{pictures/kdplot.png}
 	\centering
 	\label{kd}
 	\caption{Kernel density estimation for $\sigma = h = [0.03, 0.2, 0.8]$}
@@ -125,7 +125,6 @@ Snippet of the code used:
 def gaussian(x,h):
     return np.exp(-x**2/(2*h**2))/(h*np.sqrt(2*np.pi))  
 
-
 N = train.size
 X_plot = np.linspace(-4, 8, 100)
 sum1 = np.zeros(len(X_plot))
@@ -139,7 +138,6 @@ for i in range(0, N):
 plt.fill(X_plot, sum1, edgecolor="black" ,linewidth=1)
 plt.xlabel("p_x")
 plt.ylabel("x")
-
 
 # Calculate the likelihood
 likelihood_sum = 0
@@ -158,12 +156,16 @@ print(likelihood_sum)
 Estimate the probability density with the K-nearest neighbors method with $K=2, K=8, K=35$.
 Generate a single plot with the different density estimates and attach it to your solutions. Plot the densities in the interval $x \in [-4,8]$, attach a snippet of your code and comment the results.
 
-\begin{answer}\end{answer}
+\begin{answer}
+
+
+\end{answer}
 
 \end{question}
 
+
 \begin{figure}[!h]
-	\includegraphics[width=0.7\linewidth]{pictures/knnplot.png}
+	\includegraphics[width=0.62\linewidth]{pictures/knnplot.png}
 	\centering
 	\label{kd}
 	\caption{K-Nearest Neighbors for $k=2, k=8, k=35$}
@@ -174,7 +176,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 import math
 
-
 train = np.loadtxt("nonParamTrain.txt");
 k = 35
 N = train.size
@@ -184,29 +185,28 @@ x_axis = np.linspace(-4, 8, N)
 
 # plot density
 for i in range(0, N):
-for ii in range(0, N - 1, ):
-distances[i][ii] = abs(train[i] - train[ii])
+    for ii in range(0, N - 1, ):
+        distances[i][ii] = abs(train[i] - train[ii])
 
-distances[i, :] = np.sort(distances[i, :]);
-pd[i] = distances[i][-k]  # k nearest neighbor
+    distances[i, :] = np.sort(distances[i, :]);
+    pd[i] = distances[i][-k]  # k nearest neighbor
 
 result = k / (N * abs(x_axis - pd))
 plt.plot(result)
-
 
 # Compute log likelihood
 distances = np.zeros([N, N - 1])
 pd = np.zeros(N)
 for i in range(0, N):
-for ii in range(0, N - 1, ):
-distances[i][ii] = abs(train[i] - train[ii])
+    for ii in range(0, N - 1, ):
+        distances[i][ii] = abs(train[i] - train[ii])
 
-distances[i, :] = np.sort(distances[i, :]);
-pd[i] = distances[i][-k]  # k nearest neighbor
+    distances[i, :] = np.sort(distances[i, :]);
+    pd[i] = distances[i][-k]  # k nearest neighbor
 
 likelihood = 0
 for i in range(0, N):
-likelihood += math.log(k / (N * abs(train[i] - pd[i])))
+    likelihood += math.log(k / (N * abs(train[i] - pd[i])))
 print(likelihood)
 \end{lstlisting}
 
@@ -216,8 +216,30 @@ print(likelihood)
 Estimate the log-likelihood of the testing data using the KDE estimators and the K-NN estimators.
 Why do we need to test them on a different data set? Compare the log-likelihoods of the estimators w.r.t. both the training and testing sets in a table. Which estimator would you choose?
 
-\begin{answer}\end{answer}
+\begin{answer}
+The following table lists all results for the log-likelihoods of the estimators w.r.t both the training and testing sets in a table. The First three rows are for the training set with $\sigma = [0.03, 0.2, 0.8]$ and $k = [2, 8, 35]$ and the next three for the test set using the same order oder paramterization.
+
+Actually from the log-likelihoods it seems that all estimators perform badly. However the Kernel Density Estimate using Gaussian kernel has much better results than the knn-Algorithm so its prefferable.
+
+
+\begin{center}
+	\begin{tabular}{c| c | c  }
+		& KDE & KNN \\
+		\hline 
+		1. & -675 & -2675 \\
+		2. & -717 & -875 \\
+		3. & -795 & -1273 \\
+		\hline		
+		4. & -2812 & -14631 \\
+		5. & -2877 & -11115 \\
+		6. & 3192 & -4469
+	\end{tabular}
+\end{center}
+
+\end{answer}
 
 \end{question}
+
+
 
 \end{questions}
