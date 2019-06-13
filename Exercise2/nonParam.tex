@@ -60,8 +60,7 @@ However in the end for these four bin sizes, we cant be completly sure that the 
 		\caption{Bin size calculated with Sturges Rule.}
 		\label{fig:histogram4}
 	\end{subfigure}
-	\caption{Last two Histograms}
-	
+	\caption{Last two Histograms}	
 \end{figure}
 
 	
@@ -82,9 +81,76 @@ plt.hist(train, bins=bin_sequence, edgecolor="black" ,linewidth=0.1);
 Compute the probability density estimate using a Gaussian kernel with $\sigma=0.03$, $\sigma=0.2$ and $\sigma=0.8$ of the training data. Compute the log-likelihood of the data for each case, compare them and show which parameter performs the best.
 Generate a single plot with the different density estimates and attach it to your solutions. Plot the densities in the interval $x \in [-4,8]$, attach a snippet of your code and comment the results.
 
-\begin{answer}\end{answer}
+\begin{answer}
+The log-likelihood for the first Gaussian kernel with $\sigma = 0.03$ is: $-674.7$. 
 
+The log-likelihood for the second Gaussian kernel with $\sigma = 0.02$ is: $-717.0$. 
+
+The log-likelihood for the third Gaussian kernel with $\sigma = 0.08$ is: $-795.7$. 
+
+From campring the log-likelihoods the first kernel should be the best one. But by futher observing the graphs it seems that the second kernel is the best suited for the task.
+\end{answer}
 \end{question}
+
+\begin{figure}[!h]
+	\includegraphics[width=0.7\linewidth]{pictures/kdplot.png}
+	\centering
+	\label{kd}
+	\caption{Kernel density estimation for $\sigma = h = [0.03, 0.2, 0.8]$}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\begin{subfigure}[b]{0.3\linewidth}
+		\includegraphics[width=\linewidth]{pictures/kd003.png}
+		\caption{Kernel Size of 0.03}
+		\label{fig:kd003}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.3\linewidth}
+		\includegraphics[width=\linewidth]{pictures/kd02.png}
+		\caption{Kernel Size of 0.2.}
+		\label{fig:kd02}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.3\linewidth}
+	\includegraphics[width=\linewidth]{pictures/kd08.png}
+	\caption{Kernel Size of 0.8.}
+	\label{fig:kd03}
+\end{subfigure}
+	\caption{All the plots seperated}
+\end{figure}
+
+
+Snippet of the code used: 
+\begin{lstlisting}{}
+def gaussian(x,h):
+    return np.exp(-x**2/(2*h**2))/(h*np.sqrt(2*np.pi))  
+
+
+N = train.size
+X_plot = np.linspace(-4, 8, 100)
+sum1 = np.zeros(len(X_plot))
+sum2 = np.zeros(len(X_plot))
+sum3 = np.zeros(len(X_plot))
+
+for i in range(0, N):
+    sum1 += ((gaussian(X_plot - train[i], h=0.03)) / N)
+
+# Plot the result
+plt.fill(X_plot, sum1, edgecolor="black" ,linewidth=1)
+plt.xlabel("p_x")
+plt.ylabel("x")
+
+
+# Calculate the likelihood
+likelihood_sum = 0
+for i in range(0, N):
+    likelihood = 0
+    for j in range(0, N):
+        likelihood += ((gaussian(train[i] -train[j], h=0.03)) / N)
+    likelihood = math.log(likelihood)
+    likelihood_sum += likelihood
+print(likelihood_sum)
+\end{lstlisting}
 
 %----------------------------------------------
 
@@ -95,6 +161,54 @@ Generate a single plot with the different density estimates and attach it to you
 \begin{answer}\end{answer}
 
 \end{question}
+
+\begin{figure}[!h]
+	\includegraphics[width=0.7\linewidth]{pictures/knnplot.png}
+	\centering
+	\label{kd}
+	\caption{K-Nearest Neighbors for $k=2, k=8, k=35$}
+\end{figure}
+
+\begin{lstlisting}{}
+import numpy as np
+import matplotlib.pyplot as plt
+import math
+
+
+train = np.loadtxt("nonParamTrain.txt");
+k = 35
+N = train.size
+distances = np.zeros([N, N - 1])
+pd = np.zeros(N)
+x_axis = np.linspace(-4, 8, N)
+
+# plot density
+for i in range(0, N):
+for ii in range(0, N - 1, ):
+distances[i][ii] = abs(train[i] - train[ii])
+
+distances[i, :] = np.sort(distances[i, :]);
+pd[i] = distances[i][-k]  # k nearest neighbor
+
+result = k / (N * abs(x_axis - pd))
+plt.plot(result)
+
+
+# Compute log likelihood
+distances = np.zeros([N, N - 1])
+pd = np.zeros(N)
+for i in range(0, N):
+for ii in range(0, N - 1, ):
+distances[i][ii] = abs(train[i] - train[ii])
+
+distances[i, :] = np.sort(distances[i, :]);
+pd[i] = distances[i][-k]  # k nearest neighbor
+
+likelihood = 0
+for i in range(0, N):
+likelihood += math.log(k / (N * abs(train[i] - pd[i])))
+print(likelihood)
+\end{lstlisting}
 
 %----------------------------------------------
 
