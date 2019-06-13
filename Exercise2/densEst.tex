@@ -17,7 +17,129 @@ to two classes, $C_1$ and $C_2$.
 \begin{question}{Gaussian Maximum Likelihood Estimation}{10}
 Derive the ML estimate for the mean and covariance of the \textbf{multivariate} Gaussian distribution. Start your derivations with the function you optimize. Assume that you can collect i.i.d data. (Hint: you can find many matrix identities on the Matrix Cookbook (\url{https://www.math.uwaterloo.ca/~hwolkowi/matrixcookbook.pdf}) and at \url{http://en.wikipedia.org/wiki/Matrix_calculus}.)
 
-\begin{answer}\end{answer}
+\begin{answer}
+The Multivariate Gaussian Distribution is defined as
+
+\begin{equation}
+	f_x(\mu|\Sigma) = \frac{1}{\sqrt{(2\pi)^p \text{det}(\Sigma)}} \text{exp} (-\frac{1}{2}(x-\mu)^T \Sigma^{-1} (x-\mu))
+\end{equation}
+
+$\Sigma$ is the Covariance Matrix defined as:
+\begin{equation}
+\begin{pmatrix}
+	\sigma_{xx}^2 & \sigma_{xy}^2 \\
+	\sigma_{xy}^2 & \sigma_{yy}^2 \\
+\end{pmatrix}
+\end{equation}
+
+The resulting likelihood function of $f_x(x)$ is:
+
+\begin{equation}
+L(\mu, \Sigma) = \prod\limits_{n=1}^{N} f_x(\mu|\Sigma)
+\end{equation}
+
+We now take the log of the likelihood function. 
+
+(Doesnt matter if we use theta or mu and sigma)
+
+\begin{equation}
+	\log L(\mu, \Sigma) = \sum_{n=1}^{N} \log f_x(\mu|\Sigma)
+\end{equation}
+
+Resulting in the log likelihood function for a multivariate gausian distribution.
+
+\begin{equation} \label{L}
+	\log L(\mu, \Sigma) = \sum_{n=1}^{N} \log (\frac{1}{\sqrt{(2\pi)^p \text{det}(\Sigma)}} \text{exp} (-\frac{1}{2}(x-\mu)^T \Sigma^{-1} (x-\mu)))
+\end{equation}
+
+Now we want to derive the mean and covariance for this distribution. Starting with the mean, we need to maximize the partial equation. 
+
+\begin{equation}
+\frac{\partial L }{\partial \mu} = \sum_{n=1}^{N} \underbrace{\log (\frac{1}{\sqrt{(2\pi)^p \text{det}(\Sigma)}})'}_{0} + 
+\sum_{n=1}^{N} (-\frac{1}{2}(x-\mu)^T \Sigma^{-1} (x-\mu))'
+\end{equation}
+
+For matrix Calculus we use following rules:
+\begin{equation}
+\frac{\partial(Xa+b)^T C(Xa+b)}{\partial x} = (C+C^T) (Xa +b)a^T
+\end{equation}
+
+With $X = x$, $a = 1$, thus $a^T = 1$ and $b = -\mu$. We get
+
+\begin{equation}
+\sum_{n=1}^{N} (\Sigma + (\Sigma^{-1})^T (x - \mu)) = 0
+\end{equation}
+
+Since $\Sigma$ is a symmetrical Matrix $\Sigma + \Sigma^T = 2\cdot\Sigma$ holds true. This matrix is also constant, meaning its independend on the sum and can be written before it.
+
+\begin{equation}
+2\Sigma^{-1} \cdot \sum_{n=1}^{N} (x-\mu) = 0
+\end{equation}
+\begin{equation}
+\sum_{n=1}^{N}x_i = \sum_{n=1}^{N}\mu
+\end{equation}
+
+Since $\mu$ is a constant we can write the sum over a constant as $N\cdot\mu$
+\begin{equation}
+\sum_{n=1}^{N}x_i = N\cdot\mu
+\end{equation}
+
+Resulting in the following equation for the mean:
+\begin{equation}
+\mu = \frac{1}{N} \sum_{n=1}^{N}x_i
+\end{equation}
+
+Now we want to derive the maximum Likelihood estimate for the covariance of the multivariate Gaussian distribution. Again we Start with Equation \eqref{L}.
+For this derivation the will the following rules for matrix calculus.
+\begin{equation}
+	\frac{\partial}{\partial A} \log(\det(A)) = (A^{-1})^T
+\end{equation}
+\begin{equation}
+	\frac{\partial}{\partial A}x^T A x = xx^T
+\end{equation}
+With $A = \Sigma$ and $x = (x-\mu)$.
+First we split the log of gaussian equation up into three part for easier derivation.
+
+\begin{equation}
+\frac{\partial L}{\partial \Sigma} = \underbrace{\log(\frac{1}{\sqrt{2\pi}^P})'}_{\text{a}} + \sum_{n=1}^{N}(\underbrace{\log(\frac{1}{\sqrt{\det(\Sigma)}})'}_{b} + \underbrace{\log \exp (-\frac{1}{2} (x-\mu)^T \Sigma^{-1}(x-\mu))'}_{c}) 
+\end{equation}
+
+For $a$:
+\begin{equation}
+	\frac{\partial L_a}{\partial \Sigma} = 0
+\end{equation}
+
+For $b$:
+\begin{equation}
+	\log(\frac{1}{\sqrt{\det(\Sigma)}}) = \log(\frac{1}{\det(\Sigma)^{\frac{1}{2}}}) = \frac{1}{2}\cdot\log(\frac{1}{\det(\Sigma)})
+\end{equation}
+
+\begin{equation}
+\frac{\partial L_b}{\partial \Sigma} = \frac{1}{2}\cdot\frac{1}{(\Sigma^{-1})^T} = \frac{1}{2} \cdot \Sigma
+\end{equation}
+
+For $c$:
+\begin{equation}
+	\frac{\partial L_c}{\partial \Sigma} = -\frac{1}{2}(x - \mu)\cdot(x - \mu)^T 
+\end{equation}
+
+In total we get the following derivative:
+\begin{equation}
+	\frac{\partial L}{\partial \Sigma} = \sum_{n=1}^{N}\frac{1}{2}\Sigma - \sum_{n=1}^{N}(\frac{1}{2}(x - \mu)\cdot(x - \mu)^T) = 0
+\end{equation}
+
+Multiplied by $\frac{1}{2}$:
+\begin{equation}
+	\sum_{n=1}^{N} \Sigma = \sum_{n=1}^{N}((x - \mu)\cdot(x - \mu)^T)
+\end{equation}
+
+Since $\Sigma$ is constant we can write $\sum_{n=1}^{N}\Sigma = N\cdot\Sigma$.
+Resulting in the final equation for the covariance
+\begin{equation}
+	\Sigma = \frac{1}{N} \sum_{n=1}^{N}(x_i -\mu)\cdot(x_i - \mu)^T
+\end{equation}
+
+\end{answer}
 
 \end{question}
 
@@ -26,7 +148,16 @@ Derive the ML estimate for the mean and covariance of the \textbf{multivariate} 
 \begin{question}{Prior Probabilities}{2}
 Compute the prior probability of each class from the dataset. 
 
-\begin{answer}\end{answer}
+\begin{answer}
+We count for class 1: $n_1 = 239$ and for class 2: $n_2 = 761$. Resulting in following priors
+\begin{equation}
+	p(C_1) = \frac{239}{235+761} = 0.239
+\end{equation}
+\begin{equation}
+    p(C_2) = \frac{761}{235+761} = 0.761
+\end{equation}
+
+\end{answer}
 
 \end{question}
 
