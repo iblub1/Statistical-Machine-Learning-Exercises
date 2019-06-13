@@ -26,7 +26,13 @@ Derive the ML estimate for the mean and covariance of the \textbf{multivariate} 
 \begin{question}{Prior Probabilities}{2}
 Compute the prior probability of each class from the dataset. 
 
-\begin{answer}\end{answer}
+\begin{answer}
+By counting the class frequencies in the given dataset we can obtain the prior probabilities.\\
+\begin{align}
+&p(C_{1})=\frac{239}{239+761}=0.239
+&p(C_{2})=\frac{239}{239+761}=0.761
+\end{align}
+\end{answer}
 
 \end{question}
 
@@ -39,8 +45,28 @@ Then calculate the biased and unbiased estimates of the conditional distribution
 Show the final result and attach a snippet of your code.
 Do not use existing functions, but rather implement the computations by yourself!
 
-\begin{answer}\end{answer}
-
+\begin{answer}
+The bias of an estimator $\Theta$ measures the difference between the expected value of an estimator and its' true value. It is is defined as:
+\begin{equation*}
+Bias(\widehat{\theta})= E(\widehat{\theta}) - \theta
+\end{equation*}
+Assuming a Gaussian distribution, the biased and unbiased estimates of the conditional distributions can be calculated using the following formula:
+\begin{align*}
+&\overline{\mathbf{x}}_{unbiased}= \frac{1}{N} \sum_{i=1}^{n} \mathbf{x}_{i} \\
+&\widehat{\boldsymbol{\Sigma}}_{unbiased}=\frac{1}{N-1} \sum_{i=1}^{N}(\mathbf{x}_{i}-\overline{\mathbf{x}})(\mathbf{x}_{i}-\overline{\mathbf{x}})^{\mathrm{T}} \\
+&\widehat{\boldsymbol{\Sigma}}_{biased}=\frac{1}{N} \sum_{i=1}^{N}(\mathbf{x}_{i}-\overline{\mathbf{x}})(\mathbf{x}_{i}-\overline{\mathbf{x}})^{\mathrm{T}}
+\end{align*}
+We thus obtain the following values for the given dataset.
+\begin{align*}
+&\overline{\mathbf{x}}_{1, unbiased} =\\
+&\overline{\mathbf{x}}_{2, unbiased} =\\
+&\widehat{\boldsymbol{\Sigma}}_{1, unbiased} =\\
+&\widehat{\boldsymbol{\Sigma}}_{2, unbiased} =\\
+&\widehat{\boldsymbol{\Sigma}}_{1, biased} =\\
+&\widehat{\boldsymbol{\Sigma}}_{2, biased} =\\
+\end{align*}
+The code is attached.
+\end{answer}
 \end{question}
 
 
