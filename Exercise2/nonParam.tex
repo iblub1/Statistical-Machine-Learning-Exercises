@@ -17,9 +17,64 @@ In this exercise, you will use the datasets \texttt{nonParamTrain.txt} for train
 Compute and plot the histograms using $0.02$, $0.5$, $2.0$ size bins of the training data.  
 Intuitively, indicate which bin size performs the best and explain why. Knowing only these three trials, would you be sure that the one you picked is truly the best one? Attach the plot of the histograms and a snippet of your code.
 
-\begin{answer}\end{answer}
+\begin{answer}
+The first figure \ref{fig:histogram1} shows a Histogram of the data with bin size 0.02. The "spicky" behavior and empty bins which are conssistend throughout the Histogram, indicate that the bin size has been chosen to to small (to much Variance).	
 
+In the next Figure \ref{fig:histogram2} you can imagine a trend for the underlying distribution. This indicates a good bin size.
+
+
+The third histogram \ref{fig:histogram3} also schows a trend of the underlying function, but compared to figure \ref{fig:histogram2} some of details get lost in the representation. Meaning that the bin size has been choosen to big (to much Bias).
+
+Bonus: This last histogram \ref{fig:histogram4} is an histogram with the number of bins determined by Sturges Rule. It's shape is similiar to figure (2), only beeing a bit more smooth. However Sturges rule is critized to smooth the Histogram to much (Hyndman, 1995) and should be only used as a rule of thumb. In this case it adds futher believe into a bin size of about 0.5
+
+However in the end for these four bin sizes, we cant be completly sure that the one choose is the best, but we have atleast good evidence for it.
+	
+\end{answer}
 \end{question}
+
+
+\begin{figure}[H]
+	\centering
+	\begin{subfigure}[b]{0.4\linewidth}
+		\includegraphics[width=\linewidth]{pictures/histogram002.png}
+		\caption{Bin Size 0.02.}
+		\label{fig:histogram1}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.4\linewidth}
+		\includegraphics[width=\linewidth]{pictures/histogram05.png}
+		\caption{Bin Size 0.5.}
+		\label{fig:histogram2}
+	\end{subfigure}
+	\caption{First two Histograms}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\begin{subfigure}[b]{0.4\linewidth}
+		\includegraphics[width=\linewidth]{pictures/histogram2.png}
+		\caption{Bin Size 2}
+		\label{fig:histogram3}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.4\linewidth}
+		\includegraphics[width=\linewidth]{pictures/histogramSturge.png}
+		\caption{Bin size calculated with Sturges Rule.}
+		\label{fig:histogram4}
+	\end{subfigure}
+	\caption{Last two Histograms}
+	
+\end{figure}
+
+	
+Snippet of the code used: 
+\begin{lstlisting}{}
+import numpy as np
+train = np.loadtxt("nonParamTrain.txt");
+
+import matplotlib.pyplot as plt
+binwidth = 0.02
+bin_sequence = np.arange(min(train), max(train) + binwidth, binwidth)  
+plt.hist(train, bins=bin_sequence, edgecolor="black" ,linewidth=0.1);
+\end{lstlisting}
 
 %----------------------------------------------
 
