@@ -181,14 +181,43 @@ Assuming a Gaussian distribution, the biased and unbiased estimates of the condi
 \end{align*}
 We thus obtain the following values for the given dataset.
 \begin{align*}
-&\overline{\mathbf{x}}_{1, unbiased} =\\
-&\overline{\mathbf{x}}_{2, unbiased} =\\
-&\widehat{\boldsymbol{\Sigma}}_{1, unbiased} =\\
-&\widehat{\boldsymbol{\Sigma}}_{2, unbiased} =\\
-&\widehat{\boldsymbol{\Sigma}}_{1, biased} =\\
-&\widehat{\boldsymbol{\Sigma}}_{2, biased} =\\
+&\overline{\mathbf{x}}_{1, unbiased} =  
+\begin{bmatrix} 
+-0.70681374 \\
+ -0.81343083
+\end{bmatrix}\\
+&\widehat{\boldsymbol{\Sigma}}_{1, unbiased} =
+\begin{bmatrix} 
+9.05742302 & 2.6841014 \\
+2.6841014 & 3.61145033 
+\end{bmatrix}
+\\
+&\widehat{\boldsymbol{\Sigma}}_{1, biased} =
+\begin{bmatrix} 
+9.01952586 & 2.67287085 \\
+2.67287085 & 3.59633965 
+\end{bmatrix}
+\\
+&\overline{\mathbf{x}}_{2, unbiased} =
+\begin{bmatrix} 
+3.98534252 \\
+3.98438364
+\end{bmatrix}\\
+&\widehat{\boldsymbol{\Sigma}}_{2, unbiased} =
+\begin{bmatrix} 
+4.18087542  & 0.02761954 \\
+0.02761954 & 2.75658555 
+\end{bmatrix}
+\\
+&\widehat{\boldsymbol{\Sigma}}_{2, biased} =
+\begin{bmatrix} 
+4.1753815 & 0.02758324 \\
+0.02758324 & 2.75296323
+\end{bmatrix}
+\\
 \end{align*}
 The code is attached.
+\lstinputlisting[language=Python]{gaussian_estimators.py}
 \end{answer}
 \end{question}
 
