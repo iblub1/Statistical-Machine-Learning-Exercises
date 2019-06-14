@@ -283,6 +283,50 @@ What do we do when we want to predict a new point?\\
 Which are the advantages of being Bayesian? 
 
 \begin{answer}
+For this task we follow the these technical notes: Thomas P. Minka (2010) - Bayesian linear regression.\\
+The data is is modeled in the following way: An input vector $\boldsymbol{x}$ of length $m$ multiplies a coefficient matrix $\boldsymbol{\theta}$ in order to produce and output vector $\boldsymbol{y}$ of length $d$, with Gaussian noise $\boldsymbol{e}$ added. The noise $\boldsymbol{e}$ has zero mean and a variance $\mathbf{V}$.\\
+\begin{equation*}
+\begin{aligned} \mathbf{y} &=\mathbf{\boldsymbol{\theta} x}+\mathbf{e} \\ \mathbf{e} & \sim \mathcal{N}(0, \mathbf{V})  \end{aligned}
+\end{equation*}
+This is equivalent to the following conditional distribution for $\mathbf{y}$:
+\begin{equation*}
+p(\mathbf{y} | \mathbf{x}, \boldsymbol{\theta}, \mathbf{V})  \sim \mathcal{N}(\boldsymbol{\theta} \mathbf{x}, \mathbf{V})
+\end{equation*}
+The set of pairs $D=\{(\mathbf{y}_{1}, \mathbf{x}_{1}), \ldots,(\mathbf{y}_{N}, \mathbf{x}_{N})\}$ are independent and identically distributed, which leads to:
+\begin{equation}
+\begin{aligned} 
+p(\mathbf{Y} | \mathbf{X}, \boldsymbol{\theta}, \mathbf{V})&=\prod_{i} p(\mathbf{y}_{i} | \mathbf{x}_{i}, \boldsymbol{\theta}, \mathbf{V})
+\\ &=\frac{1}{|2 \pi \mathbf{V}|^{N / 2}} \exp (-\frac{1}{2} \operatorname{tr}(\mathbf{V}^{-1}[\boldsymbol{\theta} \mathbf{X} \mathbf{X}^{\mathrm{T}} \boldsymbol{\theta}^{\mathrm{T}}-2 \mathbf{Y} \mathbf{X}^{\mathrm{T}} \boldsymbol{\theta}^{\mathrm{T}}+\mathbf{Y} \mathbf{Y}^{\mathrm{T}}]))
+\end{aligned} 
+\label{eq:likelihood}
+\end{equation}
+A conjugate prior for the coeffiecients $\boldsymbol{\theta}$ is the matrix-normal density with parameters $\mathbf{M}$($dxm$), $\mathbf{V}$($dxd$) and $\mathbf{K}$($mxm$):
+\begin{equation}
+\begin{aligned} p(\boldsymbol{\theta}) & \sim \mathcal{N}(\mathbf{M}, \mathbf{V}, \mathbf{K}) \\ &=\frac{|\mathbf{K}|^{d / 2}}{|2 \pi \mathbf{V}|^{m / 2}} \exp (-\frac{1}{2} \operatorname{tr}((\boldsymbol{\theta}-\mathbf{M})^{\mathrm{T}} \mathbf{V}^{-1}(\boldsymbol{\theta}-\mathbf{M}) \mathbf{K})) \end{aligned}
+\label{eq:prior}
+\end{equation}
+If we use the following abbreviations:
+\begin{equation*}
+\mathbf{S}_{x x}=\mathbf{X} \mathbf{X}^{\mathrm{T}}+\mathbf{K}
+\end{equation*}
+\begin{equation*}
+\mathbf{S}_{y x}=\mathbf{Y} \mathbf{X}^{\mathrm{T}}+\mathbf{M K}
+\end{equation*}
+\begin{equation*}
+\mathbf{S}_{y y}=\mathbf{Y} \mathbf{Y}^{\mathrm{T}}+\mathbf{M K M}^{\mathrm{T}}
+\end{equation*}
+\begin{equation*}
+\mathbf{S}_{y | x}=\mathbf{S}_{y y}-\mathbf{S}_{y x} \mathbf{S}_{x x}^{-1} \mathbf{S}_{y x}^{\mathrm{T}}
+\end{equation*}
+Under the assumption that the output is gaussian with fixed variance, he posterior for $\boldsymbol{\theta}$ then is matrix normal:
+\begin{equation*}
+p(\boldsymbol{\theta}| D, \mathbf{V}) \sim \mathcal{N}(\mathbf{S}_{y x} \mathbf{S}_{x x}^{-1}, \mathbf{V}, \mathbf{S}_{x x})
+\end{equation*}
+This can be derived by taking the likelihood (\ref{eq:likelihood}) times the conjugate prior (\ref{eq:prior}):
+\begin{equation*}
+\begin{aligned} p(\mathbf{Y}, \boldsymbol{\theta} | \mathbf{X}, \mathbf{V}) & \propto \exp (-\frac{1}{2} \operatorname{tr}(\mathbf{V}^{-1}(\boldsymbol{\theta} \mathbf{S}_{x x} \boldsymbol{\theta}^{\mathrm{T}}-2 \mathbf{S}_{y x} \boldsymbol{\theta}^{\mathrm{T}}+\mathbf{S}_{y y}))) \\ & \propto \exp (-\frac{1}{2} \operatorname{tr}(\mathbf{V}^{-1}((\boldsymbol{\theta}-\mathbf{S}_{y x} \mathbf{S}_{x x}^{-1}) \mathbf{S}_{x x}(\boldsymbol{\theta}-\mathbf{S}_{y x} \mathbf{S}_{x x}^{-1})^{\mathrm{T}}+\mathbf{S}_{y | x}))) \end{aligned}
+\end{equation*}
+
 The advantages of being Bayesian are, that the pararameters are regarded as random variables and a prior is put on these. As a consequence the uncertainty of parameter values is incorporated in the model. This leads to automatic regularization and model selection according to the data and avoids over-/ or underfitting. There is no need for separate model selection criteria as BIC and AIC. Furthermore bayesian estimation provides a natural way of  including prior knowledge with incoming data, in order to obtain a posterior. This posterior can be used as prior for new decisions.
 \end{answer}
 
