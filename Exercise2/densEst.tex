@@ -149,10 +149,10 @@ Compute the prior probability of each class from the dataset.
 \begin{answer}
 We count for class 1: $n_1 = 239$ and for class 2: $n_2 = 761$. Resulting in following priors
 \begin{equation}
-	p(C_1) = \frac{239}{235+761} = 0.239
+	p(C_1) = \frac{239}{239+761} = 0.239
 \end{equation}
 \begin{equation}
-    p(C_2) = \frac{761}{235+761} = 0.761
+    p(C_2) = \frac{761}{239+761} = 0.761
 \end{equation}
 
 \end{answer}
@@ -216,7 +216,7 @@ We thus obtain the following values for the given dataset.
 \end{bmatrix}
 \\
 \end{align*}
-The code is attached.
+The code for calculating the estimators is attached.
 \lstinputlisting[language=Python]{gaussian_estimators.py}
 \end{answer}
 \end{question}
@@ -227,8 +227,15 @@ The code is attached.
 \begin{question}{Class Density}{5}
 Using the unbiased estimates from the previous question, fit a Gaussian distribution to the data of each class. Generate a single plot showing the data points and the probability densities of each class.
 (Hint: use the contour function for plotting the Gaussians.) 
-
-\begin{answer}\end{answer}
+\begin{figure}[h!]
+	\includegraphics[width=0.8\linewidth]{pictures/plot_gaussians.png}
+	\centering
+	\caption{Plot of the class densities and data points.}
+	\label{fig:densities}
+\end{figure}
+\begin{answer}
+Using the unbiased estimates from before, we can plot the class densities and the data points. See Figure \ref{fig:densities} for the plot. According to the datasets, the red dots belong to class 1 and the blue dots belong to class 2.
+\end{answer}
 
 \end{question}
 
@@ -236,11 +243,37 @@ Using the unbiased estimates from the previous question, fit a Gaussian distribu
 
 \begin{question}{Posterior}{8}
 In a single graph, plot the posterior distribution of each class $p(C_i|x)$ and show the decision boundary. 
-
-\begin{answer}\end{answer}
+\begin{figure}[]
+	\includegraphics[width=0.8\linewidth]{pictures/posterior_contour.png}
+	\centering
+	\caption{Contour plot of the posterior distribution of each class in a single graph.}
+	\label{fig:posterior_contour}
+\end{figure}
+\begin{figure}[]
+	\includegraphics[width=0.8\linewidth]{pictures/posterior_3d.png}
+	\centering
+	\caption{3d plot of the posterior distribution of each class in a single graph.}
+	\label{fig:posterior_3d}
+\end{figure}
+\begin{figure}[]
+	\includegraphics[width=0.8\linewidth]{pictures/decision_small.png}
+	\centering
+	\caption{Decision boundary with small scale of the x- and y-axes.}
+	\label{fig:decision_small}
+\end{figure}
+\begin{figure}[]
+	\includegraphics[width=0.8\linewidth]{pictures/decision_large.png}
+	\centering
+	\caption{Decision boundary with large scale of the x- and y-axes}
+	\label{fig:decision_large}
+\end{figure}
+\begin{answer}
+The figures \ref{fig:posterior_contour} and \ref{fig:posterior_3d} show the posterior distribution of both classes in a single plot. Figure \ref{fig:posterior_contour} shows a contour plot, whereas figure \ref{fig:posterior_3d} shows a 3d view.\\
+The figures \ref{fig:decision_small} and \ref{fig:decision_large} display the decision boundary, with two different scales for the x- and y-axes. The colour yellow indicates a decision for class 1 and purple encodes a decision for class 2.
+\end{answer}
 
 \end{question}
-
+\newpage
 %----------------------------------------------
 
 \begin{question}[bonus]{Bayesian Estimation}{15}
@@ -249,7 +282,9 @@ Formulate the posterior distribution for your model parameters given the data, i
 What do we do when we want to predict a new point?\\
 Which are the advantages of being Bayesian? 
 
-\begin{answer}\end{answer}
+\begin{answer}
+The advantages of being Bayesian are, that the pararameters are regarded as random variables and a prior is put on these. As a consequence the uncertainty of parameter values is incorporated in the model. This leads to automatic regularization and model selection according to the data and avoids over-/ or underfitting. There is no need for separate model selection criteria as BIC and AIC. Furthermore bayesian estimation provides a natural way of  including prior knowledge with incoming data, in order to obtain a posterior. This posterior can be used as prior for new decisions.
+\end{answer}
 
 \end{question}
 
