@@ -17,7 +17,24 @@ In this exercise, you will use the dataset \texttt{ldaData.txt}, containing 137 
 Explain the difference between discriminative and generative models and give an example for each case.
 Which model category is generally easier to learn and why?
  
-\begin{answer}\end{answer}
+\begin{answer}
+\textbf{Generative models} first use the underlying data to deduce properties of the underlying probability distribution in form of the class-doncitional densties $p(x|C_k)$ for each class $C_k$. Seperatly they infer the prior class probabilities $p(C_k)$. After that, they use Bayes'theorem  in the form 
+\begin{equation}
+	\frac{p(x|C_k) p(C_k)}{p(x)}
+\end{equation}
+to fint the posteriori class probabilities $p(C_k|x)$. Now decision theory is used to determine class membership. 
+
+Since in theory we can use these distribution to create new data, this is called a gernative model. Also note that generative models also work when modeling the joint distribution $p(x, C_k)$ and normalizing. 
+
+
+\textbf{Discriminative models} determine the posterior class probabilities $p(C_k|x)$ directly. After that decision theory is used to each new input to a class. 
+
+
+Because generative models need the joint distribution $p(x,C_k)$ for calculating the posterior distribution, instead of deriving it directly, they're much harder to train. This is especially true if $x$ is highly dimensional, since then we need a very big dataset to model class-doncitional densities correctly.
+
+ 
+
+\end{answer}
 
 \end{question}
 
