@@ -162,7 +162,28 @@ It can be noted, that the NRMSE is extremely small, but not zero, when all four 
 Throughout this class we have seen that PCA is an easy and efficient way to reduce the dimensionality of some data. However, it is able to detect only linear dependences among data points. A more sophisticated extension to PCA, \emph{Kernel PCA}, is able to overcome this limitation. 
 This question asks you to deepen this topic by conducting some research by yourself: explain what Kernel PCA is, how it works and what are its main limitations. Be as concise (but clear) as possible.
 
-\begin{answer}\end{answer}
+\begin{answer}
+As opposed to standard PCA, Kernel PCA is mapping the data into higher dimensional space, where the dimensions $d$ are bigger are equal to the datapoints $N$.  ($d \geq N$) \\
+In this higher dimensional space points can always be linearly separated, as the dimensions are at least as high as the number of data points. Due to this property Kernel regression can overcome the limitation to only detect linear dependencies.\\
+For the transformation into higher dimensional space a arbitrary function $\Phi$ is chosen:
+\begin{equation}
+\Phi(\mathbf{x}_{i}) \text { where } \Phi : \mathbb{R}^{d} \rightarrow \mathbb{R}^{N}
+\end{equation}
+As there is a transformation into higher dimensional space, there is no covariance on which we could perform eigendecomposition as in linear PCA. We can use the Kernel-trick, in order to avoid doing explicit calculations $\Phi$-Space (which is also called feature space). This is done by creating a $NxN$ Kernel, so that:
+\begin{equation}
+K=k(\mathbf{x}, \mathbf{y})=(\Phi(\mathbf{x}), \Phi(\mathbf{y}))=\Phi(\mathbf{x})^{T} \Phi(\mathbf{y})
+\end{equation}
+K can, for example, be the radial basis function Kernel:
+\begin{equation}
+k (x,y) = e^{\frac{-{(\lvert\lvert x-y \rvert\rvert)}^2}{2\sigma^2}}
+\end{equation}
+By using the Kernel trick, we never do calculations in the feature space directly. As a result Kernel PCA can not compute the principal components itself, but only directly the projections of out data onto those components, according to the following formula:
+\begin{equation}
+a^n = K \cdot x^n
+\end{equation}
+Apart of the flaw of Kernel PCA, when it comes to computing the principal components itself, Kernel PCA is inefficient for big datasets. The reason for this is, that storing the Kernel gets quite difficult in that case.\\
+Also in practice the choice of a suitable Kernel plays an important role for the performance of Kernel PCA.
+\end{answer}
 \end{question}
 
 \end{questions}
