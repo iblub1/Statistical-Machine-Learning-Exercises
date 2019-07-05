@@ -44,6 +44,27 @@ Because generative models need the joint distribution $p(x,C_k)$ for calculating
 Use Linear Discriminant Analysis to classify the points in the dataset, i.e., assume Gaussian distributions in each class with equal covariances and use the posterior distributions for assigning classes. Attach two plots with the data points using a different color for each class: one plot with the original dataset, one with the samples classified according to your LDA classifier. Attach a snippet of your code and discuss the results. How many samples are misclassified? (You are allowed to use built-in functions for computing the mean and the covariance.)
 
 \begin{answer}\end{answer}
+First, lets have a look at the data \ref{fig:classData}:
+\begin{figure}[H]
+	\includegraphics[width=0.6\linewidth]{pictures/OriginalData.png}
+	\centering
+	\caption{The given data. Three classes of points, represent by the colors: [red, blue, green].}
+	\label{fig:classData}
+\end{figure}
+
+For our classifier we chosed a Maximum Likelihood model with a Gaussian Prior.
+The classifier yields following result \ref{classifier}
+\begin{figure}[H]
+	\includegraphics[width=0.6\linewidth]{pictures/OurClassifier.png}
+	\centering
+	\caption{The classified data by our Maximum likelihood. 19 Points are missclassified.}
+	\label{fig:classifier}
+\end{figure}
+
+Since there is an overlap between classes two and tree (blue and green), it is impossible to classify all data correctly, without massively overfitting. More features would be needed if we wanted better results, without loosing generalizability. Keeping this in mind, out model performed quite well.
+The source code used:
+\lstinputlisting[language=Python]{code/lda.py}
+ 
 \end{question}
 
 %----------------------------------------------

@@ -20,7 +20,57 @@ For the estimation of the optimal parameters use a ridge coefficient of $\lambda
 \\Using what you think is the best learned model from the previous point, show in a single plot the ground truth (full dataset) and the model prediction over it.
 Attach snippets of your code showing how you generate polynomial features and how you fit the model.
 
-\begin{answer}\end{answer}
+\begin{answer}
+\end{answer}
+First we plot the whole ground truth to get a look at our dataset.
+\begin{figure}[H]
+	\includegraphics[width=0.6\linewidth]{pictures/groundTruth.png}
+	\centering
+	\caption{Plotting the whole dataset}
+	\label{fig:ground Truth}
+\end{figure}
+
+Now that we had a look into the data, let's try our polynomial regression with varrying degree. Interesingly we found two different way to calculate our regression based on numericall differences in numpy. We will talk more about this later, but first lets look at the results.
+\begin{figure}[H]
+	\includegraphics[width=0.6\linewidth]{pictures/polynomial_regression_ridge.png}
+	\centering
+	\caption{Plotting the error for all different Polynomials using the given ridge coefficient. The minimum lies at degree 10 (RMSE=0.08899).}
+	\label{fig:ridge}
+\end{figure}
+Lets have a look at the actual predictions given by this model.
+\begin{figure}[H]
+	\includegraphics[width=0.6\linewidth]{pictures/groundTruth_polynomial_10.png}
+	\centering
+	\caption{The dataset and the predictions by our model.}
+	\label{fig:pred_10}
+\end{figure}
+
+However while working on this task, we found a different way to calculate the pseudo inverse. Instead of multiplying all the different matrixes and adding the ridge coefficient we also tried the numpy function \textit{pinv} to calculate the pseudo inverse directly. The method uses singular value decomposition (SVD) to calculate the pseudo inverse and also cuts small values in the diagonal matrix off. This leads to far better results.
+ \begin{figure}[H]
+ 	\includegraphics[width=0.6\linewidth]{pictures/polynomial_regression_our_version.png}
+ 	\centering
+ 	\caption{Plotting the error for all different Polynomials using np.linalg.pinv for the pseudo-inverse. The minimum lies at degree 21 (RMSE=0.00491).}
+ 	\label{fig:pinv1}
+ \end{figure}
+This plot \ref{fig:pinv1} only has a single problem. It doesn't tell us when to start overfitting, so there might be the possibility of even better results if we extend the scope of the task to higher polynomials up to degree 25.
+ \begin{figure}[H]
+	\includegraphics[width=0.6\linewidth]{pictures/polynomial_regression_our_version_degree_26.png}
+	\centering
+	\caption{Plotting the error for all different Polynomials using np.linalg.pinv for the pseudo-inverse. The minimum is still at degree 21.}
+	\label{fig:pinv2}
+\end{figure}
+Unfortunately we start overfitting after degree 21. But it was good to check nonetheless. It is also worth noting that the graphs for the version using the ridge coefficient \ref{fig:ridge} and the graph showing the RMSE for the np.linalg.pinv versions \ref{fig:pinv1} and \ref{fig:pinv2} have the same behavior up to a polynom of 9th degree. After that the SVD version outperforms the ridge version with an RMSE of 0.00491 on the test data for a polynom of degree 21.
+
+For the sake of futher comparision we plot the data and the predictions made by our new model. \ref{fig:pinv3}. In comparison the RMSE from the ridge version with 0.08899 is about 18 times bigger, than the RMSE from SVD, however in actual comparision one can argue that the effect of using SVD doesn't perform 18 times better than ridge. 
+\begin{figure}[H]
+	\includegraphics[width=0.6\linewidth]{pictures/groundTruth_polynomial_21.png}
+	\centering
+	\caption{The dataset and the predictions by our model. Even on test data the error is very small}
+	\label{fig:pinv3}
+\end{figure}
+
+Finally lets have a look at some of the used source code. Depending on which version shall be used either line 25 or 27+28 needs to be commented out.
+\lstinputlisting[language=Python]{code/polyReg.py}
 
 \end{question}
 
@@ -29,8 +79,17 @@ Attach snippets of your code showing how you generate polynomial features and ho
 \begin{question}{Gaussian Features}{4}
 Now use Gaussian features. Each feature is a Gaussian distribution were the means are distributed linearly in $x \in[0,2]$ and the variance is set to $\sigma^2=0.02$. The features have to be normalized, i.e., they have to sum to one at every $x$. Using 10 features generate a plot with the activation of each feature over time (i.e., plot the matrix $\Phi$). Attach a snippet of your code showing how to compute Gaussian features.
 
-\begin{answer}\end{answer}
+\begin{answer}
+Lets have a look at the matrix Phi using 10 Gaussian Features. Since they're all normalized to sum up to one at every point the gaussians at the edge have bigger values.
+\end{answer}
+\begin{figure}[H]
+	\includegraphics[width=0.7\linewidth]{pictures/Phi.png}
+	\centering
+	\caption{The Design Matrix using 10 Gaussian Features with mean set between 0 and 2.}
+	\label{fig:phi}
+\end{figure}
 
+\lstinputlisting[language=Python]{code/gausReg.py}
 \end{question}
 
 %----------------------------------------------
@@ -39,6 +98,23 @@ Now use Gaussian features. Each feature is a Gaussian distribution were the mean
 Repeat the process of fitting the model using the Gaussian features from the previous question. Compare the RMSE on the testing data using $15 \ldots 40$ basis functions and plot the RMSE. Which number of basis functions has the best performance and what is the best RMSE? Use a ridge coefficient of $\lambda=10^{-6}$.
 
 \begin{answer}\end{answer}
+We start by trying out all the given numbers of gaussian features and plot the results. The smalles error (RMSE = 0.01543) is given by using 29 gaussian features \ref{fig:numberGaus}. In the context of our findings in the last questions its interesting to note, that switching the method of calculating the pseudo inverse using gaussian features does not result in different metrics. Meaning that both methods evaluated in the last questions yield the same result. Hence we will use the ridge version. 
+\begin{figure}[H]
+	\includegraphics[width=0.6\linewidth]{pictures/number_of_gaussian.png}
+	\centering
+	\caption{Comparing the number of different gaussian features used, we get that 29 functions perform best.}
+	\label{fig:numberGaus}
+\end{figure}
+
+When looking at the actual predictions made by the model we see that it performs better than the polynomial regression using ridge coefficient, but slightly worse than the polynomial regression using SVD.
+
+When plotting the ground truth and predictions of this model, we see similar performance to polynomial regression with SVD \ref{fig:gaus29}.
+\begin{figure}[H]
+	\includegraphics[width=0.5\linewidth]{pictures/groundTruth_gaus_29.png}
+	\centering
+	\caption{Comparing the actual data with the one produced by the model we get farily good results using gaussian features (RMSE=0.01543).}
+	\label{fig:gaus29}
+\end{figure}
 
 \end{question}
 
