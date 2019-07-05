@@ -17,7 +17,14 @@ In this exercise, you will use the dataset \texttt{iris.txt}. It contains data f
 Normalizing the data is a common practice in machine learning. Normalize the provided dataset such that it has zero mean and unit variance per dimension. Why is normalizing important?
 Attach a snippet of your code. 
 
-\begin{answer}\end{answer}
+\begin{answer}
+In machine learning some methods like PCA take the variance of the features as a criterion for dimensionality reduction. If the feature differ in their range, the means and the variances of the features will have a different scale. To achieve better comparability among the features it is common to normalize the data to unit variance and zero mean. The normalization can be achieved by applying the following formula to all datapoints $x_i$ for each feature separately:
+\begin{equation*}
+\frac{x_i-mean_{feature}}{standard\_deviation_{feature}}
+\end{equation*}
+We apply the normalization to the dataset according to the following code snippet.
+\lstinputlisting[language=Python]{code/PCA_normalize.py}
+\end{answer}
 
 \end{question}
 
@@ -27,9 +34,16 @@ Attach a snippet of your code.
 Apply PCA on your normalized dataset and generate a plot showing the proportion (percentage) of the cumulative variance explained. 
 How many components do you need in order to explain at least $95\%$ of the dataset variance? 
 Attach a snippet of your code.
-
-\begin{answer}\end{answer}
-
+\begin{figure}[]
+	\includegraphics[width=0.8\linewidth]{pictures/explained_var_cumulative.png}
+	\centering
+	\caption{Cumulative explained variance of dataset over number of principal components.}
+	\label{fig:1}
+\end{figure}
+\begin{answer}
+As Figure \ref{fig:1} shows, by using two principal components we can explain 95,8\% of the cumulative variance. The following code snippet shows the code for doing the PCA and for plotting.
+\lstinputlisting[language=Python]{code/PCA_explained_variance.py}
+\end{answer}
 \end{question}
 
 %----------------------------------------------
