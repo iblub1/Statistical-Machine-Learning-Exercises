@@ -1,0 +1,23 @@
+\newif\ifvimbug
+\vimbugfalse
+
+\ifvimbug
+\begin{document}
+\fi
+
+\exercise{Gaussian Processes}
+\begin{questions}
+
+%----------------------------------------------
+
+\begin{question}{GP Regression}{10}
+Implement a Gaussian Process to fit the target function $y = \sin(x) + \sin^2(x)$ with $x \in [0, 0.005, 0.01, 0.015, \ldots, 2\pi]$. Use a squared exponential kernel, an initial mean of 0 and assume a noise variance of 0.001. Begin with no target data points and, at each iteration, sample a new point from the target function according to the uncertainty of your GP (that is, sample the point where the uncertainty is the highest) and update it. Plot your GP (mean and two times standard deviation) after iterations 1, 2, 4, 8 and 16.
+In each figure, plot also the true function as ground truth and add a new marker for each new sampled point. Attach a snippet of your code.
+
+\begin{answer}\end{answer}
+
+\end{question}
+
+%----------------------------------------------
+
+\end{questions}

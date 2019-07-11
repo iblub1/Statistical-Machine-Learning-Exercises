@@ -1,0 +1,40 @@
+\newif\ifvimbug
+\vimbugfalse
+
+\ifvimbug
+\begin{document}
+\fi
+
+\exercise{Neural Networks}
+In this exercise, you will use the dataset \texttt{mnist\_small}, divided into four files. The \textit{mnist} dataset is widely used as benchmark for classification algorithms. It contains 28x28 images of handwritten digits (pairs \texttt{<input, output>} correspond to \texttt{<pixels, digit>}).
+
+\begin{questions}
+
+%----------------------------------------------
+
+\begin{question}{Multi-layer Perceptron}{20}
+Implement a neural network and train it using backpropagation on the provided dataset. Choose your loss and activation functions and your hyperparameters (number of layers, neurons, learning rate, ...), briefly explaining your choices. You \textbf{cannot} use any library beside \texttt{numpy}! That is, you have to implement by yourself the loss and activation functions, the backpropagation algorithm and the gradient descent optimizer (if you want to use any).
+
+Show how the misclassification error (in percentage) on the testing set evolves during the learning. An acceptable solution achieves an error of 8\% or less. Attach snippets of your code. 
+
+Hint: if your network does not learn, check how the network parameters change and plot the trend of your loss function.
+
+\begin{answer}\end{answer}
+
+\end{question}
+
+%----------------------------------------------
+
+\begin{question}[bonus]{Deep Learning}{5}
+In recent years, deep neural networks have become one of the most used tools in machine learning. 
+Highlight the qualitative differences between classical neural networks and deep networks. Which limitations of classical NN does deep learning overcome?
+Give an intuition of the innovations introduced in deep learning compared to traditional NN.
+(Hint: Have a look \href{http://arxiv.org/abs/1206.5538}{at this paper}. Use Google Scholar to read other scientific papers for more insights.)
+
+\begin{answer}\end{answer}
+
+\end{question}
+
+%----------------------------------------------
+
+\end{questions}

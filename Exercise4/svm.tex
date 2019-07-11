@@ -1,0 +1,70 @@
+\newif\ifvimbug
+\vimbugfalse
+
+\ifvimbug
+\begin{document}
+\fi
+
+\exercise{Support Vector Machines}
+In this exercise, you will use the dataset \texttt{iris-pca.txt}. It is the same dataset used for Homework 3, but the data has been pre-processed with PCA and only two kinds of flower (`Setosa' and `Virginica') have been kept, along with their two principal components. Each row contains a sample while the last attribute is the label ($0$ means that the sample comes from a `Setosa' plant, $2$ from `Virginica').
+\\You are allowed to \texttt{numpy} functions (e.g., \texttt{numpy.linalg.eig}). For quadratic programming we suggest \texttt{cvxopt}.
+\begin{questions}
+
+%----------------------------------------------
+
+\begin{question}{Definition}{3}
+Briefly describe SVMs. What is their advantage w.r.t. other linear approaches we discussed this semester? 
+
+\begin{answer}\end{answer}
+\end{question}
+
+%----------------------------------------------
+
+\begin{question}{Quadratic Programming}{2}
+Formalize SVMs as a constrained optimization problem.
+
+\begin{answer}\end{answer}
+\end{question}
+
+%----------------------------------------------
+
+\begin{question}{Slack Variables}{2}
+Explain the concept behind slack variables and reformulate the optimization problem accordingly. 
+
+\begin{answer}\end{answer}
+\end{question}
+
+
+%----------------------------------------------
+
+%\begin{question}{Slack Variables}{7}
+%Solve the optimization problem of the previous question. Show all the intermediate steps and write down the final solution.
+%
+\begin{answer}\end{answer}
+%\end{question}
+
+
+\begin{question}{The Dual Problem}{4}
+What are the advantages of solving the dual instead of the primal?
+	
+\begin{answer}\end{answer}
+\end{question}
+
+%----------------------------------------------
+
+\begin{question}{Kernel Trick}{3}
+Explain the kernel trick and why it is particularly convenient in SVMs.
+
+\begin{answer}\end{answer}
+\end{question}
+
+%----------------------------------------------
+
+\begin{question}[bonus]{Implementation}{5}
+Implement and learn an SVM to classify the data in \texttt{iris-pca.txt}. Choose your kernel. Create a plot showing the data, the support vectors and the decision boundary. Show also the misclassified samples. Attach a snippet of your code.
+
+\begin{answer}\end{answer}
+
+\end{question}
+
+\end{questions}
