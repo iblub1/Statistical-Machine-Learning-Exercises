@@ -19,8 +19,26 @@ Show how the misclassification error (in percentage) on the testing set evolves 
 
 Hint: if your network does not learn, check how the network parameters change and plot the trend of your loss function.
 
-\begin{answer}\end{answer}
+\begin{answer}
+For the activation function I chose the sigmoid activation function. I choosed this activation function, since its derivation can be formulated using the actual function. This makes implementing gradient descent very easy. However since I choose this approach, it is non-trivial to change the activation function, since its derivative is hardcoded in the gradient descent algorithm. 
 
+For the loss function I simply try to minimize between the output of the neural network and the label. For this purpose a one-hot-encoding is used. 
+
+For the number of layers I went with a single layer. One layer should be sufficient enough to achieve the given metric. It is also easy to train and easy to implement. 
+
+The number of neurons, learning rate and epoch count are chosen after my feeling of what could potentially work. 
+
+If we now have a look at the graph showing the error on the validation set, we can see that it decreases with each epoch and reaches a minimum at 5.38 percent \ref{fig:nn}. 
+\end{answer}
+\begin{figure}[H]
+	\includegraphics[width=0.8\linewidth]{pictures/NN_loss.png}
+	\centering
+	\caption{Classification error of the Neural Network for each epoch.}
+	\label{fig:nn}
+\end{figure}
+
+Since I have already written a Neural Network last year, the code is mostly reused from that time, with removed scipy dependencies. I learned about Neuronal Networks from Tariq Rashid, so parts of my codes will borrow from his implementation. I also had some problems loading the train/test-in data with numpy, so I put them in excel and saved them again as csv, which made them work. Since this mnist dataset is sorted we need to shuffle them. I found a nice numpy function on stackoverflow which does exactly that. 
+\lstinputlisting[language=Python]{code/Neural_Network.py}
 \end{question}
 
 %----------------------------------------------
