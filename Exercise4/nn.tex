@@ -49,7 +49,17 @@ Highlight the qualitative differences between classical neural networks and deep
 Give an intuition of the innovations introduced in deep learning compared to traditional NN.
 (Hint: Have a look \href{http://arxiv.org/abs/1206.5538}{at this paper}. Use Google Scholar to read other scientific papers for more insights.)
 
-\begin{answer}\end{answer}
+\begin{answer}
+The main qualitative difference between classical neural networks and deep networks is the number of layers used. Classical neural networks mostly used only a single layer. This was due to the fact that training deeper structures was hard because of vanishing gradients and considered uncesseray since the universal approximation theorem states that a single hidden layer is enough. This in combination with less training data and avaiable gpu power led to only focus on training single layer neuronal networks. 
+
+One of the main pitfalls of classical neuronal networks was not thinking about the futher consequences of the universal approximation theorem. As it turns out, even if a single layer neural network can learn every function, the theorem doesn't state the complexity needed thus resulting in massive overfitting. 
+
+When talking about learning representations in machine learning one key aspect is the hierachical organization of explanatory features. This means that concepts can can be defined in terms of other concepts which are all placed in a hierarchy. The more abstract, non-linear concepcts are at the top of the hierarchy. This allows Deep neural network to build more abstract features in the high levels on top of other features. In a sense a deep neural network is nothing more than a giant feature building machine. 
+
+Another strong point for the neural network is that it allows for the re-use of features. This property exists thanks to an exponential grow in the number of paths in the circuit that arise in deeper models. 
+
+
+\end{answer}
 
 \end{question}
 
