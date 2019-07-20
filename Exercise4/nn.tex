@@ -20,9 +20,18 @@ Show how the misclassification error (in percentage) on the testing set evolves 
 Hint: if your network does not learn, check how the network parameters change and plot the trend of your loss function.
 
 \begin{answer}
-For the activation function I chose the sigmoid activation function. I choosed this activation function, since its derivation can be formulated using the actual function. This makes implementing gradient descent very easy. However since I choose this approach, it is non-trivial to change the activation function, since its derivative is hardcoded in the gradient descent algorithm. 
+For the activation function I chose the sigmoid activation function. I choosed this activation function, since its derivation can be formulated using the actual function (logistic differntial equation). This makes implementing gradient descent very easy. However since I choose this approach, it is non-trivial to change the activation function, since its derivative is hardcoded in the gradient descent algorithm.
+\begin{equation}
+	g(x)=\frac{1}{1+e^{-x}}
+\end{equation} 
+\begin{equation}
+	\frac{d}{dx}g(x)=g(x)\cdot (1-g(x))
+\end{equation}
 
-For the loss function I simply try to minimize between the output of the neural network and the label. For this purpose a one-hot-encoding is used. 
+For the loss function I simply try to minimize between the output $f(x,w)$ of the neural network and the label $y$. For this purpose a one-hot-encoding is used. 
+\begin{equation}
+	L=y-f(x,w)
+\end{equation}
 
 For the number of layers I went with a single layer. One layer should be sufficient enough to achieve the given metric. It is also easy to train and easy to implement. 
 
