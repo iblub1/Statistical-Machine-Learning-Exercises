@@ -15,23 +15,37 @@ In this exercise, you will use the dataset \texttt{iris-pca.txt}. It is the same
 \begin{question}{Definition}{3}
 Briefly describe SVMs. What is their advantage w.r.t. other linear approaches we discussed this semester? 
 
-\begin{answer}\end{answer}
+\begin{answer}
+A Support Vector Machine (SVM) is a non-probabilistic discriminative classifier, which is defined by two hyperplanes that define the class borders, and a margin in between of these hyperplanes. The hyperplane in between of the two class hyperplanes is the maximum-margin hyperplane. An SVM model is a representation of the labeled examples in points in space, mapped in such a way, that the examples of the separated classes are divided by a margin, which is as wide as possible. If no slack variables are included, the algorithm does not allow for any points to lie within the margin. The points, that lie at the border of the margin, and thus define it, are called support vectors. New examples are mapped into the same space and their class label is predicted to belong to a category based on the side of the margin, on which they are located.
+In comparison to other linear approchases, SVMs can also do complex, non-linear classification by employing the kernel trick. Kernel can implicitly map inputs into high-dimensional feature spaces. Unlike other methods, SVMs work well with unstructured data like text, images or trees. Furthermore we do not need many prior knowledge or assumptions on the data, as in the case of LDA with a Bayes Classifier.
+Furthermore, SVMs are an approximate imlementation of the structural risk minimization principle. If the data is linearly separable, the empirical risk of SVM classifiers is zero. It follows, that the risk bound will be approximately minimized. SVMs thus have a bulit-in generalization ability.
+\end{answer}
 \end{question}
 
 %----------------------------------------------
 
 \begin{question}{Quadratic Programming}{2}
 Formalize SVMs as a constrained optimization problem.
-
-\begin{answer}\end{answer}
+\begin{answer}
+Assuming linearly separable data, SVMs can be formalized as constrained optimization problem as follows
+ (see lecture notes of Andrew Ng):
+\begin{equation}
+\begin{aligned} \min _{w, b} & \frac{1}{2}\|w\|^{2} \\ \text { s.t. } & y^{(i)}(w^{T} x^{(i)}+b) \geq 1, \quad i=1, \ldots, m \end{aligned}
+\end{equation}
+$\mathbf{x}_{i} \in \mathbb{R}^{d}$ are the data points and $y_{i} \in\{-1,1\}$ the belonging class labels. Hyperplanes, that can separate the data, have the general form $y(\mathbf{x})=\mathbf{w}^{\top} \mathbf{x}+b$. The above constrained optimization problem is aiming to find the hyperplane, so that the data is linearly separated and the margin between the classes is maximized. Maximizing the margin 1$/\|\mathbf{w}\|$ is equivalent to minimizing $\frac{1}{2}\|\mathbf{w}\|^{2}$ and the constraint $y_{i}(\mathbf{w}^{\top} \mathbf{x}_{i}+b)=1$ enforces, that at least one point, a so called support vector, is on each hyperplane, that define the classes.
+\end{answer}
 \end{question}
 
 %----------------------------------------------
 
 \begin{question}{Slack Variables}{2}
 Explain the concept behind slack variables and reformulate the optimization problem accordingly. 
-
-\begin{answer}\end{answer}
+\begin{answer}
+Slack variables ``soften'' the hard constraint, that no points are allowed within the class separating margin. Now points are allowed to lie within, but this is penalized. The arguing behind this is, that SVM without using the kernel trick, can now deal with classes, that are ``overlapping'' and thus are not linearly separable. Slack variables measure the error induced by points within the margin and penalize it. This enlarges the cases, where SVM can be used for classifying. The weight $C$ allows to specify a trade-off. and the slack variables are denoted by $\xi_{i}$. This lead to the following formulation:
+\begin{equation}
+\begin{array}{c}{\arg \min _{\mathbf{w}, b} \frac{1}{2}\|\mathbf{w}\|^{2}+C \sum_{i=1}^{N} \xi_{i}} \\ {\textrm { s.t. } y_{i}(\mathbf{w}^{\top} \mathbf{x}_{i}+b)-1+\xi_{i} \geq 0} \\ {\xi_{i} \geq 0}\end{array}
+\end{equation}
+\end{answer}
 \end{question}
 
 
@@ -47,15 +61,38 @@ Explain the concept behind slack variables and reformulate the optimization prob
 \begin{question}{The Dual Problem}{4}
 What are the advantages of solving the dual instead of the primal?
 	
-\begin{answer}\end{answer}
+\begin{answer}
+The dual form is given by:
+\begin{equation}
+\begin{array}{l}{\min \sum_{i=1}^{N} \alpha_{i}-\frac{1}{2} \sum_{i=1}^{N} \sum_{j=1}^{N} \alpha_{i} \alpha_{j} y_{i} y_{j}(\mathbf{x}_{j}^{\top} \mathbf{x}_{i})} \\ {\textrm { s.t. } \alpha_{i} \geq 0} \\ {\quad \sum_{i=1}^{N} \alpha_{i} y_{i}=0}
+\end{array}
+\end{equation}
+Exactly as the primal formulation, this is still a quadratic programming problem.
+But if we now employ the nonlinear transformation $\Phi$ of the data, we can obtain a nonlinea r classifier. The new Lagrangian is:
+\begin{equation}
+\tilde{L}(\alpha)=\sum_{i=1}^{N} \alpha_{i}-\frac{1}{2} \sum_{i=1}^{N} \sum_{j=1}^{N} \alpha_{i} \alpha_{j} y_{i} y_{i}(\phi(\mathbf{x}_{j})^{\top} \phi(\mathbf{x}_{i}))
+\end{equation}
+$\Phi$  only appears in scalar products with other $\Phi$. We only need to evaluate these scalar products. The discriminant funciton can also be written with scalar products of the nonlinear features only:
+\begin{equation}
+y(\mathbf{x})=\sum_{i=1}^{N_{S}} \alpha_{i} y_{i} \phi(\mathbf{x}_{i})^{\top} \phi(\mathbf{x})+b
+\end{equation}
+This enables the kernel trick, which we talk about in the next task.
+\end{answer}
 \end{question}
 
 %----------------------------------------------
 
 \begin{question}{Kernel Trick}{3}
 Explain the kernel trick and why it is particularly convenient in SVMs.
-
-\begin{answer}\end{answer}
+\begin{answer}
+In the Kernel trick we replace every occurence of a scalar product between features with a Kerlen function.
+\begin{equation}
+K(\mathbf{x}_{i}, \mathbf{x}_{j})=\phi(\mathbf{x}_{i})^{\top} \phi(\mathbf{x}_{j})
+\end{equation}
+If we find a kernel funciton, which is equivalent to this scalar product, we can avoid mapping into a high dimensional space and instead compute the scalar-product directly.
+We now can easily map the classification problem in a higher dimensional space, where any not linearly separable problem gets linearly separable.
+Using this trick, SVM can classify even highly non linearly separable problems.
+\end{answer}
 \end{question}
 
 %----------------------------------------------
